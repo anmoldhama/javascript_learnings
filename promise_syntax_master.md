@@ -1,6 +1,7 @@
 Beginner - Understand Basic Promises
 1) Create a basic promise that resolves with a value after 1 second.
-ans : function getValue(){
+ans :
+ <!-- function getValue(){
     return new Promise((res,rej)=>{
         setTimeout(()=>{
              res(1)
@@ -8,7 +9,7 @@ ans : function getValue(){
     })
 }
 
-getValue().then(data => console.log(data));
+getValue().then(data => console.log(data)); -->
 
 2) Write a promise that rejects with an error message if a condition is false?
 ans : function getValue(value){
