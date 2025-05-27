@@ -1,0 +1,4 @@
+2025-05-24T10:00:00.000Z - Server started
+2025-05-24T10:01:23.120Z - User login: anmol@example.com
+2025-05-24T10:02:10.987Z - Payment received: #TXN12345
+2025-05-24T10:03:55.300Z - Server error: DB timeout
