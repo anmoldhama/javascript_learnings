@@ -1,43 +1,111 @@
  Basic React Questions
 Q.1) What is React and how does it work?
+ans : RReact is a JavaScript library created by Facebook for building single-page applications (SPAs).
+      It uses a virtual DOM, which is a lightweight copy of the real DOM.
+      then first react change these into the virtual dom and then sync the virtual dom to the real dom this process is known as reconciliation in which only the changes are re-rendered not the complete dom.
 
 Q.2) What are the key features of React?
+ans : 1) Uses Virtual DOM for faster updates
+      2) Highly flexible and user friendly because it is a library
+      3) Have very effective state management
+      4) Used to create single page applications
+      5) Component-based architecture
+      6) Supports unidirectional data flow (one-way data binding)   why?
+      7) Easy integration with other libraries
+      8) Strong community support
 
 Q.3) What is JSX?
+ans : JSX stands for javascript XML it is a format just like a html written inside the javascipt.
+     Browsers don’t understand JSX, so React uses tools like Babel to convert it into regular JavaScript.
 
 Q.4) What is the virtual DOM?
+ans : Virtual DOM is a copy of the real dom which is first updated after any states changes detected in the react application and this will sync up with the real dom.
 
 Q.5) How is React different from other frameworks like Angular or Vue?
+ans : Because react is a light weight libarary not a framework
+      It gives more flexibility and doesn’t enforce structure.
+      not have predefined rules.
+      fast because of its virtual dom.
 
 Q.6) What are components in React?
+ans : components are just the functions of code
+      Components are reusable pieces of UI in React.
+      These helps to modularize the code.
+      They can be functional or class-based.
 
 Q.7) What is the difference between functional and class components?
+ans : Functional Components: Simple JavaScript functions. Use React hooks (like useState, useEffect).
+      Class Components: Use ES6 classes. Have lifecycle methods (componentDidMount, etc.) and this keyword.  why?
 
 Q.8) What is props in React? How are they used?
+ans : Props (short for properties) are read-only data passed from parent to child components.
 
 Q.9) What is state in React? How is it different from props?
+ans : State is data that a component manages internally and can change over time.
+      Props are passed from parent and are read-only.
 
 Q.10) How do you handle events in React?
+ans : Events are handled using camelCase syntax like:
+      <button onClick={handleClick}>Click Me</button>
 
 Q.11) What are controlled vs uncontrolled components?
+ans : Controlled: Form data is handled by React state.
+      Uncontrolled: Form data is handled by the DOM (using ref).
 
 Q.12) What is the purpose of key prop in lists?
+ans : key is helps the react to identify each row to manage the states.
+      It improves performance during re-rendering.
 
-Q.13) What is the difference between componentWillMount() and componentDidMount()?
+Q.13) What is the difference between componentWillMount() and componentDidMount()?  why?
+ans : componentWillMount(): Runs before the component mounts (rarely used, now deprecated).
+      componentDidMount(): Runs after the component is added to the DOM — used for data fetching.
 
 Q.14) What is conditional rendering in React?
+ans : conditional rendering is used to render any component on the basis of a condition
+     for eg: is_admin or is_user.
 
 Q.15) How can you style React components?
+ans : CSS files
+
+Inline styles
+
+CSS-in-JS libraries (e.g., styled-components)
+
+Tailwind CSS or Bootstrap
 
 Q.16) What are fragments in React?
+ans ; Fragments let you group multiple elements without adding extra DOM nodes.
+     <>
+  <h1>Hello</h1>
+  <p>World</p>
+</>
+
 
 Q.17) What is the use of useState() hook?
+ans : useState() is used to create and manage state in a functional component.
+      const [count, setCount] = useState(0);
+      it has two parameters a setter function and a variable itself
 
 Q.18) What is the use of useEffect() hook?
+ans : we use useEffect() to call the callback inside the useEffect on the basis of the depenedency array
+      whenever react observer any side effect inside the dependency array then react must execute the callback.
 
 Q.19) How do you pass data between components (parent to child, child to parent)?
+ans :  parent to child we have the props
+       child to parent we have state up, Pass a callback function from parent and call it in the child
 
-Q.20) What is the purpose of defaultProps and propTypes?
+Q.20) What is the purpose of defaultProps and propTypes?    why?
+ans : defaultProps: Set default values for props.
+      propTypes: Define expected data types for props (for type safety and debugging).
+
+     MyComponent.defaultProps = {
+  name: 'Guest'
+};
+
+MyComponent.propTypes = {
+  name: PropTypes.string
+};
+
 
 🟡 Intermediate React Questions
 Q.21) What is the difference between useEffect() and componentDidMount()?

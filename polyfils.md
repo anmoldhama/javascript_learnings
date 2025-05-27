@@ -216,27 +216,136 @@ let arr = [1,2,[3,4,6]];
 console.log(arr.myFlat(1));
 
 
-Q.)  Polyfil for Arrya.isArray();
+Q.)  Polyfil for Array.isArray();
+ans : 
+
+Array.myIsArray = function (arg){
+      if(Object.prototype.toString.call(arg) === '[object Array]'){
+          return true;
+      }
+      return false;
+      
+}
+
+let arr = [1,2,3,4,5];
+
+console.log(Array.myIsArray(arr));
 
 
 🔤 String Methods (Polyfills)
 Q.11) Implement String.prototype.includes?
 ans : 
+  
+String.prototype.myIncludes = function (target) {
+    if (typeof target !== 'string') return false;
 
-Q.12) Create a polyfill for String.prototype.startsWith.
+    for (let i = 0; i <= this.length - target.length; i++) {
+        let match = true;
+        for (let j = 0; j < target.length; j++) {
+            if (this[i + j] !== target[j]) {
+                match = false;
+                break;
+            }
+        }
+        if (match) return true;
+    }
 
-Q.13) Write a polyfill for String.prototype.endsWith.
+    return false;
+};
 
-Q.14) Implement String.prototype.repeat.
 
-Q.15) Create a custom version of String.prototype.trim.
+Q.12) Create a polyfill for String.prototype.startsWith?
+ans : 
+String.prototype.myStartsWith = function (target){
+    const str = this.toString();
+    if(typeof target !== 'string') return false;
 
-Q.16) Implement String.prototype.padStart.
+    return str.slice(0, target.length) === target;
+}
+
+let str = "anmol";
+console.log(str.myStartsWith("an"));
+
+Q.13) Write a polyfill for String.prototype.endsWith?
+ans : 
+String.prototype.myEndsWith = function (target){
+    
+    return this.slice(this.length-target.length) === target;
+}
+
+
+let str = "anmol";
+console.log(str.myEndsWith("ol"));
+
+Q.14) Implement String.prototype.repeat?
+ans : 
+String.prototype.myRepeat = function (target){
+    let result = '';
+    for(let i = 0; i<target; i++){
+        result += this;
+    }
+    return result;
+}
+
+
+let str = "-";
+console.log(str.myRepeat(4));
+
+Q.15) Create a custom version of String.prototype.trim?
+ans : 
+String.prototype.myTrim = function () {
+    let start = 0;
+    let end = this.length - 1;
+
+    while (start <= end && this[start] === ' ') {
+        start++;
+    }
+
+    while (end >= start && this[end] === ' ') {
+        end--;
+    }
+
+    return this.slice(start, end + 1);
+};
+
+let str = "   anmol   ";
+console.log(str.myTrim()); // "anmol"
+
+Q.16) Implement String.prototype.padStart?
 
 Q.17) Polyfill String.prototype.padEnd.
 
+
+
 📐 Object & Utility Functions
-Q.18) Implement Object.assign manually.
+Q.18) Implement Object.assign manually?
+ans : 
+Object.prototype.myAssign = function (target,...args){
+    
+    let to = Object(target);
+  
+    for(let source of args){
+        if(source != null){
+            for(let key in source){
+                if (source.hasOwnProperty(key)){
+                to[key] = source[key];
+                }
+            }
+        }
+    }
+    
+    return to;
+}
+
+
+
+const target = { a: 1 };
+const source1 = { b: 2 };
+const source2 = { c: 3 };
+
+console.log(Object.prototype.myAssign({}, target, source1, source2));
+// Output: { a: 1, b: 2, c: 3 }
+
 
 Q.19) Polyfill for Object.create.
 
