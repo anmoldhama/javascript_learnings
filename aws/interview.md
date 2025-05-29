@@ -1,44 +1,262 @@
 🔹 Section 1: AWS Fundamentals
-What is AWS, and what are its primary services?
+Q.1) What is AWS, and what are its primary services?
+ans :AWS (Amazon Web Services) is a cloud computing platform provided by Amazon. It offers on-demand computing resources and services in a pay-as-you-go pricing model. Organizations use AWS to host websites, run applications, manage databases, store files, and much more.
 
-Explain the AWS Shared Responsibility Model.
+EC2 (Elastic Compute Cloud): Virtual servers in the cloud.
 
-What are AWS Regions and Availability Zones?
+ELB (Elastic Load Balancing): Distributes traffic across multiple EC2 instances.
 
-Define and differentiate IaaS, PaaS, and SaaS with AWS examples.
+EBS (Elastic Block Store): Persistent block storage for EC2.
 
-What is an Amazon Machine Image (AMI)?
+Lambda: Serverless compute service to run code in response to events.
 
-What is the AWS Free Tier, and what does it include?
+CloudWatch: Monitoring and logging service.
 
-Explain the difference between vertical and horizontal scaling.
+IAM (Identity and Access Management): User and permissions management.
 
-What is the AWS Well-Architected Framework?
+S3 (Simple Storage Service): Object storage service.
 
-How does AWS pricing work?
+ASG (Auto Scaling Group): Automatically adjusts EC2 instances based on demand.
 
-What are AWS Service Limits?
+
+
+Q.2) Explain the AWS Shared Responsibility Model.
+ans : The AWS Shared Responsibility Model outlines who is responsible for what in the cloud environment:
+
+AWS (Provider) is responsible for:
+
+The security "of" the cloud (hardware, software, networking, facilities).
+
+Physical infrastructure and global network.
+
+Customer is responsible for:
+
+Security "in" the cloud (data, identity, applications).
+
+Configuring security groups, managing IAM users, encrypting data, etc.
+
+Example:
+
+AWS secures the S3 infrastructure.
+
+You (customer) secure the data stored in your S3 bucket via permissions.
+
+Q.3) What are AWS Regions and Availability Zones?
+ans : Region: A geographic area (e.g., US-East-1, ap-south-1) containing multiple data centers.
+
+Availability Zone (AZ): A physically isolated data center in a region with its own power, cooling, and networking.
+
+Each Region has 2 or more AZs. Services like EC2 and RDS can span AZs for high availability and fault tolerance.
+
+Q.4) Define and differentiate IaaS, PaaS, and SaaS with AWS examples.
+ans : | Model                                  | Description                                                  | AWS Example                       |
+| -------------------------------------- | ------------------------------------------------------------ | --------------------------------- |
+| **IaaS (Infrastructure as a Service)** | Provides virtualized computing resources                     | EC2, EBS, VPC                     |
+| **PaaS (Platform as a Service)**       | Provides a platform to develop, run, and manage applications | AWS Elastic Beanstalk, AWS Lambda |
+| **SaaS (Software as a Service)**       | Fully functional software over the internet                  | Amazon WorkMail, AWS Chime        |
+
+
+Q.5) What is an Amazon Machine Image (AMI)?
+ans : An AMI is a template that contains a software configuration, including:
+
+OS (e.g., Ubuntu, Amazon Linux)
+
+Application server
+
+Applications
+
+You use an AMI to launch EC2 instances. You can also create custom AMIs to include your specific software stack.
+
+Q.6) What is the AWS Free Tier, and what does it include?
+ans: The AWS Free Tier allows new users to explore AWS services for free (for 12 months).
+
+Includes:
+
+750 hours/month of EC2 (t2.micro)
+
+5 GB of S3 storage
+
+750 hours/month of RDS (db.t2.micro)
+
+1 million Lambda requests/month
+
+25 GB of DynamoDB
+
+Some services are always free (e.g., AWS Lambda free tier, 1M requests/month).
+
+Q.7) Explain the difference between vertical and horizontal scaling.
+ans : vertical scaling is a technique used to increase the resources on a single machine
+      horizontal scaling is a technique used to increase the number of machines.
+
+Q.8) What is the AWS Well-Architected Framework?
+ans : A set of best practices to build secure, high-performing, resilient, and efficient infrastructure on AWS.
+
+5 Pillars:
+
+Operational Excellence – Monitoring, automation, incident response.
+
+Security – Identity, encryption, compliance.
+
+Reliability – Recovery, availability, failure handling.
+
+Performance Efficiency – Right resources for workload, scaling.
+
+Cost Optimization – Avoid waste, measure spending.
+
+Q.9) How does AWS pricing work?
+ans : AWS uses a pay-as-you-go pricing model:
+
+Per-second or per-hour billing (depending on service).
+
+Tiered pricing for data transfer and storage.
+
+Savings Plans and Reserved Instances offer discounts for long-term commitments.
+
+Free Tier for new users.
+
+You only pay for what you consume, with no upfront cost or long-term commitment (unless you opt in).
+
+Q.10) What are AWS Service Limits?
+ans : AWS imposes default service limits (quotas) to protect users from accidental overuse and to manage resources.
+
+Examples:
+
+Number of EC2 instances per region.
+
+Number of VPCs per region.
+
+Lambda concurrency limits.
+
+Limits can be soft (adjustable) or hard (fixed). You can request limit increases via AWS Support.
 
 🔹 Section 2: Compute Services
-What is Amazon EC2, and what are its key features?
+Q.11) What is Amazon EC2, and what are its key features?
+ans : it is a virutal machine provides by the amazon which is seperate and created with the selected resources
+      Key Features:
 
-How do you choose the right EC2 instance type?
+Customizable Instance Types based on CPU, memory, and storage.
 
-What is the difference between EC2 and Lambda?
+Secure Access via SSH using .pem key pairs.
 
-Explain the concept of Auto Scaling.
+Security Groups & VPC for network-level security.
 
-What is AWS Elastic Beanstalk?
+Elasticity: Easily scale up or down.
 
-Describe the use cases for AWS Lambda.
+AMI Support: Launch instances from pre-configured or custom images.
 
-What is AWS Fargate?
+Auto Scaling and Load Balancing integration.
 
-How does Amazon Lightsail differ from EC2?
+Integration with EBS, S3, IAM, CloudWatch, etc.
 
-What are Spot Instances, and when would you use them?
+Q.12) How do you choose the right EC2 instance type?
+ans : Choosing the right EC2 instance depends on:
 
-What is the purpose of EC2 Placement Groups?
+Workload Type:
+
+Compute-intensive → C series (e.g., c7g).
+
+Memory-intensive → R or X series.
+
+Storage-intensive → I or D series.
+
+General purpose → T or M series.
+
+Budget:
+
+Consider on-demand, reserved, or spot pricing.
+
+Performance Requirements:
+
+Number of vCPUs
+
+Amount of RAM
+
+Network bandwidth
+
+GPU requirements (e.g., P, G instances)
+
+AMI compatibility with the selected instance type (e.g., ARM vs x86).
+
+Q.13) What is the difference between EC2 and Lambda?
+ans : | Feature             | **EC2**                                 | **Lambda**                                     |
+| ------------------- | --------------------------------------- | ---------------------------------------------- |
+| **Execution Model** | Manual or scheduled, persistent servers | Event-driven, short-lived functions            |
+| **State**           | Stateful (can maintain session)         | Stateless                                      |
+| **Management**      | You manage OS, patching, scaling        | Fully managed                                  |
+| **Use Case**        | Long-running apps, custom environments  | Short scripts, triggers, APIs, real-time tasks |
+| **Pricing**         | Pay per hour/second                     | Pay per execution & compute time               |
+
+Q.14) Explain the concept of Auto Scaling.
+ans : auto scaling is a technique in which the ec2 instances are adjusted using auto scaling groups
+      when the heavy traffic approaches then increase the servers
+      when the small traffic approaches then decrease the ec2 instance count.
+      They will provide the durability
+      High availability
+      falut tolerance.
+
+Q.15) What is AWS Elastic Beanstalk?
+ans : AWS Elastic Beanstalk is a Platform as a Service (PaaS) that makes it easy to deploy and manage web applications.
+
+Supports multiple languages: Node.js, Python, Java, .NET, PHP, etc.
+
+Manages infrastructure: EC2, Load Balancer, Auto Scaling, RDS.
+
+Allows customization using .ebextensions.
+
+Ideal for developers who want to focus on code, not infrastructure.
+
+Q.16) Describe the use cases for AWS Lambda.
+ans : API Backend with API Gateway
+
+Real-time File Processing (e.g., S3 event → Lambda → process file)
+
+Scheduled Tasks (e.g., daily report generation)
+
+Data Transformation in ETL pipelines
+
+IoT and Mobile Backend Services
+
+Cost Optimization: Pay only when the function runs
+
+Q.17) What is AWS Fargate?
+ans : AWS Fargate is a serverless compute engine for containers.
+
+Works with ECS or EKS.
+
+No need to manage EC2 instances.
+
+Automatically allocates compute resources for containers.
+
+Ideal for microservices and container-based applications where you want to avoid infrastructure management.
+
+Q.18) How does Amazon Lightsail differ from EC2?
+ans : | Feature             | **EC2**                         | **Lightsail**                     |
+| ------------------- | ------------------------------- | --------------------------------- |
+| **Target Audience** | Developers needing full control | Beginners/small apps              |
+| **Complexity**      | More configuration required     | Simplified UI                     |
+| **Pricing**         | Pay-as-you-go, granular         | Flat-rate pricing                 |
+| **Customization**   | Full flexibility                | Pre-configured options            |
+| **Best For**        | Scalable apps, enterprises      | Blogs, small business sites, POCs |
+
+
+Q.19) What are Spot Instances, and when would you use them?
+ans : Spot instances are the most cheapest instances of aws
+      they provide the 90% discount
+      aws gives the 2 minute notice before terminating the server
+      they are used to ci/cd pipelines
+      setup as a notification service
+
+
+Q.20) What is the purpose of EC2 Placement Groups?
+ans :  EC2 Placement Groups control how instances are physically placed on hardware within a region for performance optimization.
+
+Types:
+
+Cluster Placement Group: Instances placed close together for low latency & high throughput (e.g., HPC, ML).
+
+Spread Placement Group: Instances placed across different hardware to reduce failure risk (e.g., critical workloads).
+
+Partition Placement Group: Divides instances into partitions across hardware to contain failure (e.g., HDFS, Cassandra).
 
 🔹 Section 3: Storage Services
 What is Amazon S3, and what are its storage classes?
@@ -216,7 +434,7 @@ What are the steps to set up a hybrid cloud environment with AWS?
 
 
 🔹 EC2, Auto Scaling, and Compute
-You need to host a high-traffic web application. How would you ensure scalability and high availability using EC2?
+Q.1) You need to host a high-traffic web application. How would you ensure scalability and high availability using EC2?
 
 An EC2 instance is terminating repeatedly after being started. How would you troubleshoot this?
 

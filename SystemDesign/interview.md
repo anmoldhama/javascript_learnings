@@ -1,11 +1,75 @@
 1–10: Social Media & Communication Systems
 Design a URL shortening service like Bitly.
 
+              +---------------------+
+User →→→→→→→→ |   API Gateway       | ←→ Auth, Throttle
+              +---------------------+
+                       ↓
+         +------------------------------+
+         |     URL Shortener Service    |
+         +------------------------------+
+           ↓                     ↓
+   [Write to DB]         [Read from Redis]
+           ↓                     ↓
+         MySQL              Redis Cache
+                              ↓
+                         On miss → DB
+                              ↓
+                     Redirect (HTTP 302)
+
+
 Design a social media news feed (Facebook/Twitter feed).
+
+      +---------+         +------------+        +-------------+
+User →| API GW  | →→→→→→→→ | Feed Svc   | →→→→→→ | Redis Feed  |
+      +---------+         +------------+        +-------------+
+            ↑                         ↓                ↓
+       +---------+            +------------+     +--------------+
+       | Client  | ←←←←←←←←←←← | Post Svc   | ←←← | Post DB      |
+                              +------------+     +--------------+
+                                     ↓
+                                 Kafka Bus
+                                     ↓
+                          +------------------+
+                          | Fan-out Workers  |
+                          +------------------+
+                                     ↓
+                            +-------------------+
+                            | User Graph / Follows |
+                            +-------------------+
+
 
 Design a chat application (WhatsApp/Slack).
 
+    +-----------+      +-------------+
+    |  Client A | <--->| WebSocket GW|<----------------+
+    +-----------+      +-------------+                 |
+                            ↓                          |
+                   +-----------------+                 |
+                   |   Chat Service   |<---------+     |
+                   +-----------------+          |     |
+                      ↓     ↓     ↓             |     |
+                  Kafka  Redis  Message DB      |     |
+                      ↓     ↓     ↓             |     |
+        +-------------+     |     +------------+|     |
+        | Delivery/Notif    |     | User Svc   ||     |
+        | Worker            +---> +------------+|     |
+        +-------------+     |     |             |     |
+              ↓             |     |             |     |
+          Push Notif        +----> Presence     |     |
+          (FCM/APNs)              |             |     |
+                                 Multi-Device Sync    |
+                                                     |
+    +-----------+      +-------------+                |
+    |  Client B | <--->| WebSocket GW|<---------------+
+    +-----------+      +-------------+
+
+
+
+
 Design a photo-sharing platform like Instagram.
+
+
 
 Design a system to handle real-time notifications.
 

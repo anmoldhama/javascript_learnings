@@ -216,6 +216,8 @@ What is the difference between DELETE, TRUNCATE, and DROP?
 🔍 1–10: Data Retrieval & Querying
 You need to fetch the top 5 highest-paid employees in each department. How would you write this query?
 
+select * from employees group by department,salary order by DESC limit 5
+
 How would you find all customers who placed orders in the last 30 days but didn’t order anything in the last 7 days?
 
 A column stores date as VARCHAR. How would you convert it to a proper DATE type and fix malformed entries?

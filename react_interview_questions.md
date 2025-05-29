@@ -1,6 +1,6 @@
  Basic React Questions
 Q.1) What is React and how does it work?
-ans : RReact is a JavaScript library created by Facebook for building single-page applications (SPAs).
+ans : React is a JavaScript library created by Facebook for building single-page applications (SPAs).
       It uses a virtual DOM, which is a lightweight copy of the real DOM.
       then first react change these into the virtual dom and then sync the virtual dom to the real dom this process is known as reconciliation in which only the changes are re-rendered not the complete dom.
 
@@ -109,72 +109,306 @@ MyComponent.propTypes = {
 
 🟡 Intermediate React Questions
 Q.21) What is the difference between useEffect() and componentDidMount()?
+ans :  useEffect() is a react hook used in functional components which is on the basis of side effects
+       if you not give any array then the callback is executed on every re-renders
+       if you give an array then the callback is executed first time on render
+       if you give an dependecy value then the callback is executed if the value changes.
+
+       componenetDidMount is used in class based components which runs after the component mount to the ui
+       it is equal to the useEffect if you give an empty array to it.
 
 Q.23) What are React hooks? Why were they introduced?
+ans : React hooks are the hooks to manage the re-renders cycle inside the functional components.
+      types:
+           useState() : used to create and manage the state.
+           ,useEffect(): used to manage the side effects inside the functional components
+           ,useCallback(): used to prevent the re-rendering of a functions.
+           ,useRef(): used to prevent the re-rendering of a variable ,
+            useMemo(): used to prvent the complex calculations by memoizing them only triggered on the dependency array.
+            , useContext(): use to get the context of the global state.
+            , useReducer() : use to create and manage the complex states.
 
 Q.24) Explain the rules of hooks.
+ans : Only call Hooks at the top level
+      Only call Hooks from React functions
+      
 
 Q.25) What is the use of useContext() hook?
+ans : useContext hook is used to manage the state globally.
+      use useContext() to create the state
 
 Q.26) What is React.memo() and how does it help performance?
+ans : React.memo(Component) is a higher‐order component (HOC) that memoizes the rendered output of a function component. It does a shallow comparison of the component’s props; if the props have not changed since the last render, React reuses (“memoizes”) the last rendered result instead of re‐rendering the component tree.
+
+How it helps performance:
+
+Avoids costly re‐renders of component trees when props remain the same.
+
+Useful for pure, presentational components that render the same UI given the same props.
+
+You can pass a custom comparison function as the second argument (arePropsEqual(prevProps, nextProps)) to control which prop changes should trigger a re‐render.
 
 Q.27) What is the difference between useCallback() and useMemo()?
+ans : useCallback() is used prevent the re-rendering of a complete function
+      useMemo() is used prevent the re-rendering of a heavy calculation.
 
 Q.28) How does reconciliation work in React?
+ans : reconciliation is a process when the state change inside the react component the first the changes reflect in the virtual dom and the virtual dom get sync with the real dom an only the changes are re-rendered.
 
 Q.29) What is React Router and how do you use it?
+ans :React Router is a library for React that enables client-side routing—that is, rendering different components for different URL paths without full page reloads.
 
 Q.30) How do you handle form inputs in React?
+ans : React offers two main patterns for handling form inputs:
+
+     controlled components  when the state changes it will re-rendered on the ui
+     uncontrolled components when the state changes it will not rendered on the ui useRef();
 
 Q.31) What are higher-order components (HOC)?
+ans : higher-order components are the componenets which receives another components as its arguments are return a new component with some modification.
 
 Q.32) What is the Context API?
+ans : Context API uses to manages the global state of an applicataion.
+     Provider/Consumer or useContext usage.
 
 Q.33) What are render props in React?
+ans : A render prop is a pattern where a component’s children (or a specific prop) is a function that returns JSX. The parent component calls that function to know what to render.
+
+This lets you share behavior (e.g., data fetching, tracking mouse position) while letting the consumer decide how to render UI.
 
 Q.34) What is prop drilling? How can it be avoided?
+ans : prop drilling is a situation when the props means data are sends to the multiple nested components.
+which is very hard to manage thats why we use the useContext or Redux.
 
 Q.35) What are portals in React?
+ans : Portals provide a way to render a React subtree into a DOM node outside the parent hierarchy.
+
+Use case examples: Modals, tooltips, or dropdowns that should visually “escape” overflow or stacking contexts from parent components.
 
 Q.36) What are error boundaries in React?
+ans :
+ An error boundary is a React component that catches JavaScript errors anywhere in its child component tree, logs those errors, and displays a fallback UI instead of crashing the entire React component subtree.
+
+Only class components can be error boundaries (as of React 18). You implement two lifecycle methods:
+
+static getDerivedStateFromError(error)
+
+Called when a child throws an error. Update state here to show a fallback UI.
+
+componentDidCatch(error, info)
+
+Called after an error is thrown. You can log the error (e.g., send to an error‐tracking service).
 
 🔴 Advanced React Questions
 Q.37) What is server-side rendering (SSR) in React?
+ans :  In this the complete dynamic page is prepared on the server side and send as a response to the client to render this on UI.
+      
 
 Q.38) What is hydration in React and when is it used?
+ans : Hydration is the process by which React “attaches” event listeners and initializes internal data structures on top of server-rendered HTML.
 
 Q.39) What are concurrent features in React 18?
+ans : 
 
 Q.40) What is React Fiber?
+ans : React Fiber is the complete rewrite of React’s core reconciliation algorithm (introduced in React 16) to enable incremental rendering, better scheduling, and prioritization of updates. Key points:
+
+Fiber Data Structure
+
+Each React element in the virtual DOM is represented by a “fiber node,” which contains information about the component, its props, state, effects, and a link to its parent/child/sibling fiber nodes.
+
+Unlike the older stack-based reconciler, Fiber’s linked-list structure allows React to pause, resume, and abort work easily.
+
+Incremental Rendering & Prioritization
+
+Before Fiber, React performed reconciliation in one go, blocking the main thread until the entire tree was updated. Fiber breaks the work into small units (“units of work” or “fibers”) and can interleave high-priority updates (like user input) with low-priority ones (like rendering off-screen UI).
+
+This improvement is the foundation for React’s concurrent features (see Q39).
+
+Phases in Fiber
+
+Render (Reconciliation) Phase: Builds a new fiber tree by comparing current fibers to new elements. This is where React decides what changes are needed. It can be paused if there’s higher-priority work (e.g., responding to a user click).
+
+Commit Phase: Once reconciliation is finished (or paused and resumed), React applies the changes to the real DOM in a single, synchronous “commit” step for each subtree.
+
+Benefits
+
+Time slicing: React can break work into chunks, yielding back to the browser if it takes too long.
+
+Suspense & Transitions: Fiber underlies features like Suspense, where React can suspend a subtree if data isn’t ready, then continue rendering later.
+
+Better Perceived Performance: UI remains responsive even during heavy updates, because React can pause reconciliation to handle user events.
 
 Q.41) What is suspense and lazy loading in React?
+ans : suspense is used to tell the components that some lazy loading is implemented in the react application.
+      lazy loading is a technique in which the application is splitted into parts and rendered according to requirement. this will increase the performance because not a complete application load at a time.
 
 Q.42) How does code splitting work in React?
+ans : code splitting is a technique which is used to seperate the application into parts using .lazy()
+      this will increase the performance.
+      use dynamic imports
 
 Q.43) What is the difference between strict mode and normal rendering?
+ans : React’s <StrictMode> is a special component you wrap around part of your app (usually the root) to activate additional development-only checks and warnings. It does not affect production builds or change the UI. It helps you find unsafe or deprecated patterns early.
+
+What <React.StrictMode> Does
+
+Identifies Unsafe Lifecycles
+
+Warns if you’re using deprecated methods like componentWillMount, componentWillReceiveProps, or componentWillUpdate.
+
+Warns About Legacy String Refs
+
+Discourages using stringRef="myRef" and instead encourages callback or createRef.
+
+Detects Unexpected Side Effects
+
+In development mode, React will intentionally render components twice (only during mount) to detect side effects in render or constructor. If your code mutates state or interacts with the DOM during render, you’ll see a warning.
+
+Warns About Legacy Context API
+
+Flags if you’re using the old contextTypes API instead of the new React.createContext / useContext.
+
+Ensures Reusable State
+
+Makes sure effects are properly cleaned up and that the same component can be safely remounted.
+
+
+StrictMode vs “Normal” Rendering
+
+Normal Rendering does not double-invoke lifecycle methods or warn about certain patterns.
+
+StrictMode (development only) double-invokes certain functions (like function component bodies, useEffect mount + cleanup, and some class lifecycle methods) so you can catch unintended side effects. It also logs warnings to the console.
+
+In production, <StrictMode> does nothing special—rendering is identical to normal.
 
 Q.44) What is batching in React and how does it improve performance?
+ans : Batching refers to React’s ability to group multiple state updates into a single re-render, which reduces the total number of renders and improves performance.
+
+
 
 Q.45) How does React handle reconciliation and diffing?
+ans : Whenever any state change happen in a react application this will first change to the virtual dom and only the changed part will sync to the real dom known as diffing and this complete process is known as reconciliation.
+ This will optimize the performance of react. 
 
 Q.46) How do you optimize a React application?
+ans : 1) using code splitting by lazy loading
+      2) use good builder to optimize the building time and tree shaking the code.
+      3) use React.memo() for cache the rendered output of a functional component.
+      4) use error bounderies if using class based component
+      5) use context api or redux for global state management
+      6) use useCallback() for prevent re-rendering of a function
+      7) use useMemo() for prevent the re-rendering of computed value.
+      8) use useRef() for creating and managing the variable which is not re-rendered on ui.
 
 Q.47) How to implement infinite scrolling in React?
+ans : Infinite scrolling means loading more data automatically as the user scrolls down, often used in news feeds or lists. A common React approach:
+
+Track scroll position
+
+You can listen for the window’s scroll event or use an IntersectionObserver on a sentinel element at the bottom of the list.
+
+Example using IntersectionObserver:
+
+jsx
+Copy
+Edit
+import React, { useState, useEffect, useRef, useCallback } from "react";
+
+function InfiniteList() {
+  const [items, setItems] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const observerRef = useRef();
+
+  // Fetch next page of items
+  const loadMore = useCallback(async () => {
+    const res = await fetch(`/api/items?page=${page}`);
+    const data = await res.json();
+    setItems(prev => [...prev, ...data.items]);
+    setHasMore(data.hasMore);
+  }, [page]);
+
+  useEffect(() => {
+    loadMore();
+  }, [loadMore]);
+
+  // IntersectionObserver to watch the “load more” sentinel
+  const lastItemRef = useCallback(
+    node => {
+      if (observerRef.current) observerRef.current.disconnect();
+      observerRef.current = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPage(prevPage => prevPage + 1);
+        }
+      });
+      if (node) observerRef.current.observe(node);
+    },
+    [hasMore]
+  );
+
+  return (
+    <div>
+      {items.map((item, idx) => {
+        if (idx === items.length - 1) {
+          // Attach ref to the last item
+          return <div key={item.id} ref={lastItemRef}>{item.text}</div>;
+        }
+        return <div key={item.id}>{item.text}</div>;
+      })}
+      {!hasMore && <p>No more items to load</p>}
+    </div>
+  );
+}
+Alternative: Listen to scroll events
+
+jsx
+Copy
+Edit
+useEffect(() => {
+  function onScroll() {
+    if (
+      window.innerHeight + document.documentElement.scrollTop + 100 >=
+      document.documentElement.offsetHeight
+    ) {
+      // near bottom → load more
+      setPage(prev => prev + 1);
+    }
+  }
+  window.addEventListener("scroll", onScroll);
+  return () => window.removeEventListener("scroll", onScroll);
+}, []);
+Key points:
+
+Always debounce or throttle scroll listeners so you don’t trigger too many fetches.
+
+Use a loading indicator while fetching more data.
+
+Stop observing/stop fetching once there’s no more data (hasMore = false).
+
+
 
 Q.48) How do you handle performance issues like unnecessary re-renders?
+ans : useCallback(), useRef(), useMemo(), React.Memo().
 
 Q.49) What is the difference between shallow rendering and deep rendering in tests?
+ans : In shallow rendering only the top level nodes are rendered on the ui
+      In deep rending all the top level and nested level nodes are rendered on the ui.
 
 Q.50) How can you test React components using Jest and React Testing Library?
+ans : 
 
 Q.51) What are the best practices for structuring a large-scale React application?
-
+ans : create components, pages, utils,buttons, inputs, customHooks
 
 
 
 
 React Advanced & Real-World Scenario-Based Questions
-What are the main differences between Redux and Context API?
+Q) What are the main differences between Redux and Context API?
+ans : Redux provides a single, centralized store with actions and reducers (and middleware) for complex state logic, whereas Context API simply lets you share and consume values throughout the component tree without props drilling, but doesn’t enforce a structured update pattern.
+
+
 
 How do you manage global state without Redux?
 
