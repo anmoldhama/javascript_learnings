@@ -258,7 +258,7 @@ Modules: CommonJS vs ES Modules
 Memory leaks and optimization
 
 🧠 2. Node.js Core Concepts
-Event-driven, non-blocking I/O model 
+Event-driven, non-blocking I/O model
 
 Node.js architecture (libuv, V8, event loop)
 
