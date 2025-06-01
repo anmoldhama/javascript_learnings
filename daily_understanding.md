@@ -177,3 +177,94 @@ Tools: Amazon RDS Proxy, PgBouncer (PostgreSQL), ProxySQL (MySQL), etc.
 | Seen By Client | Configured manually  | Appears as the server   | Transparent to app           |
 
 
+Q)  Middleware vs Guards vs Pipes ?
+   🔁 1. Middleware
+📌 Use: Request pre-processing — similar to Express middleware.
+Runs before controller.
+
+Doesn't care about route logic, just shapes/modifies the request or response.
+
+Can log, modify headers, check IPs, etc.
+
+🧠 Example Use Cases:
+Logging all requests
+
+Adding a timestamp
+
+Parsing custom headers
+
+✅ Example (NestJS):
+ts
+Copy
+Edit
+@Injectable()
+export class LoggerMiddleware implements NestMiddleware {
+  use(req: Request, res: Response, next: Function) {
+    console.log(`${req.method} ${req.url}`);
+    next(); // pass to next middleware or controller
+  }
+}
+🛡️ 2. Guard
+📌 Use: Authorization or condition checking before a route is activated.
+Can be async.
+
+Must return true (allow) or false (block), or throw an exception.
+
+Uses metadata (like roles) via decorators.
+
+🧠 Example Use Cases:
+JWT auth
+
+Role-based access control
+
+Check feature flags or user status
+
+✅ Example (NestJS):
+ts
+Copy
+Edit
+@Injectable()
+export class RolesGuard implements CanActivate {
+  canActivate(context: ExecutionContext): boolean {
+    const request = context.switchToHttp().getRequest();
+    return request.user?.role === 'admin';
+  }
+}
+🔄 3. Pipe
+📌 Use: Input transformation and validation.
+Works on @Body(), @Param(), etc.
+
+You can use class-validator, transform to types, etc.
+
+Returns the validated/transformed value or throws BadRequestException.
+
+🧠 Example Use Cases:
+Convert id from string to number
+
+Validate DTOs using class-validator
+
+Sanitize inputs
+
+✅ Example (NestJS):
+ts
+Copy
+Edit
+@Injectable()
+export class ParseIntPipe implements PipeTransform {
+  transform(value: string) {
+    const val = parseInt(value, 10);
+    if (isNaN(val)) throw new BadRequestException('Validation failed');
+    return val;
+  }
+}
+
+Incoming Request
+   ↓
+[MIDDLEWARE] → e.g., logging, modifying headers
+   ↓
+[GUARD] → e.g., isAuthenticated, hasRole('admin')
+   ↓
+[PIPE] → e.g., validate body, convert string to int
+   ↓
+[CONTROLLER] → handles logic and returns response
+
