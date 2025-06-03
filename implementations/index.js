@@ -129,19 +129,90 @@
 // }
 
 
+// const express = require('express');
+
+
+// const app = express();
+
+// app.get('/',(req,res)=>{
+//     res.send('server working fine!');
+//     })
+
+// app.listen(7000, ()=>{
+//     console.log('server running!')
+// });
+
+
+
+
+//-------------------------Async hooks--------------------------------------
+
+
+
+// const async_hooks = require('async_hooks');
+// const fs = require('fs');
+// const crypto = require('crypto');
+
+// // To log into a file (console logging inside async_hooks can cause infinite loops)
+// const logFile = fs.createWriteStream('./async_hooks.log', { flags: 'a' });
+
+// function log(...args) {
+//   logFile.write(args.join(' ') + '\n');
+// }
+
+// // Create the async hook instance
+// const asyncHook = async_hooks.createHook({
+//   init(asyncId, type, triggerAsyncId, resource) {
+//     log(`[init] asyncId: ${asyncId}, type: ${type}, triggerAsyncId: ${triggerAsyncId}`);
+//   },
+//   before(asyncId) {
+//     log(`[before] asyncId: ${asyncId}`);
+//   },
+//   after(asyncId) {
+//     log(`[after] asyncId: ${asyncId}`);
+//   },
+//   destroy(asyncId) {
+//     log(`[destroy] asyncId: ${asyncId}`);
+//   },
+//   promiseResolve(asyncId) {
+//     log(`[promiseResolve] asyncId: ${asyncId}`);
+//   }
+// });
+
+// // Enable the hook
+// asyncHook.enable();
+
+// // Example async operations
+// setTimeout(() => {
+//   log('🕒 Timeout completed');
+// }, 100);
+
+// crypto.randomBytes(64, (err, buf) => {
+//   log('🔐 Random bytes generated');
+// });
+
+// (async () => {
+//   await new Promise(resolve => setTimeout(resolve, 50));
+//   log('✅ Async/Await complete');
+// })();
+
+
+
+// clinic.js -----------------------------------------
+
+
+// server.js
 const express = require('express');
-
-
 const app = express();
 
-app.get('/',(req,res)=>{
-    res.send('server working fine!');
-    })
+let leaks = [];
 
-app.listen(7000, ()=>{
-    console.log('server running!')
+app.get('/', (req, res) => {
+  leaks.push(Buffer.alloc(1000000)); // Simulate memory leak
+  res.send('Hello World');
 });
 
+app.listen(3000, () => console.log('Server running on port 3000'));
 
 
 

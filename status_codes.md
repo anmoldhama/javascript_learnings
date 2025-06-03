@@ -94,6 +94,8 @@ Indicates an error on the client's side.
 
 *410 Gone: The resource is no longer available.
 
+
+
 *411 Length Required: Content-Length header is required.
 
 *412 Precondition Failed: Preconditions given in headers are not met.

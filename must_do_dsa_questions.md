@@ -176,17 +176,115 @@ var compress = function(chars) {
 
 46 - First Unique Character ⭐
 
+function firs_uni(str){
+    let obj = {};
+    for(let i = 0; i<str.length; i++){
+        if(obj[str[i]]){
+            obj[str[i]] += 1;
+        }else{
+            obj[str[i]] = 1;
+        }
+    }
+    
+    for(let i = 0; i<str.length; i++){
+        if(obj[str[i]] == 1){
+            return str[i];
+        }
+    }
+    
+    return -1;
+};
+
+let str = "anmola";
+console.log(firs_uni(str));
+
+
 47 - Implement _.trim() ⭐
+function trim(str){
+    
+    let start = 0;
+    let end = str.length - 1;
+    
+    while(str[start] == ' ' && start < str.length){
+        start++;
+    }
+    
+    while(str[end] == ' ' && end > 0){
+        end--;
+    }
+    
+    return str.substring(start,end+1);
+};
+
+let str = "   anmola   ";
+console.log(trim(str));
+
 
 48 - Count Vowels/Consonants ⭐
+function vowel_consonant(str){
+     let vowel_count = 0;
+     let consonant_count = 0;
+     
+     for(let i = 0; i<str.length; i++){
+         if(/[a-z]/.test(str[i])){
+              if(str[i].toLowerCase() == 'a' || str[i].toLowerCase() == 'e' || 
+                str[i].toLowerCase() == 'i' || str[i].toLowerCase() == 'o' || 
+                str[i].toLowerCase() == 'u'){
+                 vowel_count++;
+     }else{
+         consonant_count++;
+     }
+     }
+     }
+     
+     return {vowel_count,consonant_count};
 
-49 - Longest Common Prefix ⭐
+}
 
-50 - String to Integer (atoi) ⭐⭐
+let str = 'anmol dhama';
+console.log(vowel_consonant(str));
+
+
+49 - Longest Common Prefix ⭐   ---- prefix smaller approach
+function largest_common_prefix(arr){
+   let prefix = arr[0]; // flower
+   
+   for(let i = 0; i<arr.length; i++){ // 2
+       while(!arr[i].startsWith(prefix)){ //  
+            prefix = prefix.slice(0,-1);  // fl
+       }
+       if(prefix == ' ') return '';
+   }
+   return prefix; // fl
+}
+
+let str = ["flower", "flow", "flight"];
+console.log(largest_common_prefix(str));
+
+
+50 - String to Integer (atoi) ⭐⭐ 
+ans : 
+
 
 51 - Group Anagrams ⭐⭐
+var groupAnagrams = function(strs) {
+     let result = {};
+      
+      for(let i = 0; i<strs.length; i++){
+         let sorted = strs[i].split('').sort().join();
+         if(result[sorted]){
+             result[sorted].push(strs[i]);
+         }else{
+            result[sorted] = [strs[i]];
+         }
+      }
+
+      return Object.values(result);
+};
 
 52 - Valid Parentheses (Balanced brackets) ⭐
+ans :
+  morning
 
 53 - Implement String.split() ⭐⭐
 
