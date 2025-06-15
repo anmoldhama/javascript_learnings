@@ -1,15 +1,24 @@
 📘 1–10: Basic SQL & MySQL Fundamentals
 What is MySQL and how is it different from SQL?
+ans : it is a software to manage the relational databases and SQL is a structured query language.
 
 What are the different data types supported by MySQL?
+ans : varchar
+      char
+      number
 
 How do you create a database in MySQL?
+ans : create database name db_name;
 
 How do you create a table in MySQL?
+ans : create table name table_name;
 
 What is the difference between CHAR and VARCHAR?
+ans : varchar is used to predefine the length of the column.
+      whereas char is not have the fixed length;
 
 How do you insert data into a MySQL table?
+ans : 
 
 How do you update records in a table?
 

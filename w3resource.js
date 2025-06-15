@@ -1377,3 +1377,66 @@
 
 
 
+// function twoSum(arr,target){
+//      let obj = {};
+      
+//      for(let i = 0; i<arr.length; i++){
+//         let compliment = target - arr[i];
+
+//         if(obj[compliment]){
+//              return [obj[compliment], i];
+//         }
+
+//         obj[arr[i]] = i;
+//      }
+
+//      return -1;
+// }
+
+// console.log(twoSum([1,2,3,4,5,6],7));
+
+// function removeDuplicates(arr){
+//     let count = 0;
+//     let left = 0;
+    
+//     while(left < arr.length-1){
+//         if(arr[left] == arr[left+1]){ 
+//             left++; 
+//         }else{
+//             arr[count++] = arr[left++];
+//         }                            
+//     }
+
+//     arr[count] = arr[left];
+
+//     return count;
+
+// }
+
+// console.log(removeDuplicates([1,2,2,3,3,4,5,7]));
+
+
+// var rotate = function(nums, k) {
+//       k = k % nums.length;
+
+//       reverse(nums,0,nums.length-1);
+//       reverse(nums,0, k - 1);
+//       reverse(nums,k , nums.length-1);
+
+ 
+// };
+
+// var reverse = function (arr, left,right){
+     
+//      while(left < right){
+//         let temp = arr[left];
+//         arr[left] = arr[right];
+//         arr[right] = temp;
+
+//         left++;
+//         right--;
+//      }
+
+//      return arr;
+// }
+

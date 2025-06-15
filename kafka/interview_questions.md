@@ -84,9 +84,9 @@ Q) What are the delivery semantics of Kafka?
 ans : There are three types of delivery semantics :
      At Most Once: Messages may be lost, but never redelivered.
 
-At Least Once: No loss, but duplicates possible.
+     At Least Once: No loss, but duplicates possible.
 
-Exactly Once: No loss, no duplicates (requires Kafka + transactional producer and idempotent consumer)
+     Exactly Once: No loss, no duplicates (requires Kafka + transactional producer and idempotent consumer)
 
 🔹 Internal Architecture (16–30)
 Q) Explain Kafka’s distributed architecture.
