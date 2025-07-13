@@ -137,7 +137,7 @@ Answer:
 A constraint is a rule enforced on data in the database to maintain accuracy and integrity. It prevents invalid data from being entered into tables.
 
 Q19) What are the Types of Constraints in DBMS?
-Answer:
+Answer: 
 
 NOT NULL – Prevents null values in a column.
 
@@ -256,36 +256,243 @@ ans : normalization is a technique to store the data in multiple tables to maint
 Q) What are normal forms? Explain 1NF.
 ans : 
 1NF: Atomic values (no repeating groups).
+example :
+ StudentID | Name   | Courses
+----------|--------|------------------
+1         | Alice  | Math, Physics
+2         | Bob    | Chemistry
+
+
+StudentID | Name   | Course
+----------|--------|---------
+1         | Alice  | Math
+1         | Alice  | Physics
+2         | Bob    | Chemistry
+
+
 
 2NF: 1NF + No partial dependencies.
+example : student_id, course, Instructor and student_name
+
+StudentID | Course  | Instructor | StudentName
+----------|---------|------------|-------------
+1         | Math    | Mr. Smith  | Alice
+1         | Physics | Dr. Jane   | Alice
+
+studentName depends on the studentId so why this studentName row exists in this table create another table for it
+
+StudentID | StudentName
+----------|-------------
+1         | Alice
+
+StudentID | Course  | Instructor
+----------|---------|-------------
+1         | Math    | Mr. Smith
+1         | Physics | Dr. Jane
+
 
 3NF: 2NF + No transitive dependencies.
+example : empId, empName, deptId, deptName in same table should create two tables for it
+
+EmpID | EmpName | DeptID | DeptName
+------|---------|--------|----------
+1     | Alice   | 101    | HR
+
+
+EmpID | EmpName | DeptID
+------|---------|--------
+1     | Alice   | 101
+
+
+DeptID | DeptName
+--------|----------
+101     | HR
+
 
 BCNF: Stronger 3NF where every determinant is a candidate key.
+      left side of the functional dependency must be a super key
+
+example : course, instructor and room 
+
+Course  | Instructor | Room
+--------|------------|------
+Math    | Smith      | R1
+Physics | Smith      | R2
+
+Instructor | Room
+------------|-----
+Smith      | R1
+
+Course | Instructor
+--------|----------
+Math   | Smith
+
 
 Q) What is 4NF and 5NF?
+4NF  -  no multi valued dependencies.
+
+example : Student,Hobby,language
+
+Student | Hobby   | Language
+--------|---------|----------
+Alice   | Drawing | English
+Alice   | Music   | English
+Alice   | Drawing | Hindi
+Alice   | Music   | Hindi
+
+Alice has multiple Hobbies
+
+Alice knows multiple Languages
+
+These are independent multivalued facts → Causes redundancy.
+
+Student | Hobby
+--------|-------
+Alice   | Drawing
+Alice   | Music
+
+Student | Language
+--------|----------
+Alice   | English
+Alice   | Hindi
+
+
+5NF -  No join dependency anomalies
+
+
 
 Q) What is denormalization? When should you use it?
 ans : denormalization is know as embedding the data into a single table this will makes the query result faster but this will cause the data duplicacy issue.
 
 Q) What is a functional dependency?
-ans : functional dependency is 
+ans :
+A functional dependency (FD) is a relationship between two sets of attributes in a relational database. It expresses that the value of one attribute (or set of attributes) uniquely determines the value of another attribute (or set of attributes).
+
+Notation: X → Y means "Y is functionally dependent on X."
+
+If two rows have the same value of X, they must have the same value of Y.
+
+Example:
+In a table of employees:
+
+EmpID	EmpName	DeptID	DeptName
+
+EmpID → EmpName (EmpID uniquely determines EmpName)
+
+DeptID → DeptName (DeptID uniquely determines DeptName)
+
+If two employees have the same DeptID, they must belong to the same DeptName.
 
 Q) What is multivalued dependency?
+ANS :
+A multivalued dependency (MVD) occurs when one attribute in a table determines multiple independent values of another attribute, unrelated to other attributes.
+
+Denoted as: X →→ Y
+
+Means: For each value of X, there can be multiple independent values of Y.
+
+| Student | Hobby | Language |
+| ------- | ----- | -------- |
+| Alice   | Music | English  |
+| Alice   | Music | French   |
+| Alice   | Dance | English  |
+| Alice   | Dance | French   |
+
 
 Q) What is a transitive dependency?
+ans :
+A transitive dependency occurs in a relation when a non-key attribute depends on another non-key attribute, which in turn depends on the primary key.
+
+If A → B and B → C, then A → C is a transitive dependency (if B is not a key).
+
+Example:
+
+EmpID	EmpName	DeptID	DeptName
+
+EmpID → DeptID (EmpID determines DeptID)
+
+DeptID → DeptName (DeptID determines DeptName)
+
+So, EmpID → DeptName is a transitive dependency via DeptID.
+
+Transitive dependency is usually undesirable because it causes redundancy.
 
 Q) Explain ER diagram components.
 ans : 
+An Entity-Relationship (ER) Diagram is a graphical representation of entities and their relationships in a database.
+
+Entity: Represents a real-world object or concept (usually a noun). Shown as a rectangle.
+Example: Student, Employee
+
+Attribute: Describes properties of an entity. Shown as an oval.
+Example: Student(Name, RollNumber)
+
+Relationship: Describes how entities relate to each other. Shown as a diamond.
+Example: "Enrolls" between Student and Course.
+
+Primary Key: An attribute uniquely identifying each entity instance (often underlined).
+
+Weak Entity: An entity that depends on another entity for identification, shown as a double rectangle.
 
 Q) What is cardinality in ER diagrams?
+ans : 
+Cardinality specifies the number of instances of one entity related to instances of another entity.
+
+Types of cardinality:
+
+One-to-One (1:1): One entity instance relates to only one instance of another.
+
+One-to-Many (1:N): One entity instance relates to many instances of another.
+
+Many-to-Many (M:N): Many instances of one entity relate to many instances of another.
+
+Example:
+
+One teacher teaches many students (1:N)
+
+One student has one passport (1:1)
+
+Students enroll in many courses, and courses have many students (M:N)
 
 Q) What is participation constraint?
 ans : 
+Participation constraint defines whether all instances of an entity must participate in a relationship.
+
+Total participation: Every instance of an entity must be related to at least one instance of another entity. Shown with a double line.
+Example: Every employee must be assigned to a department.
+
+Partial participation: Some instances may not participate. Shown with a single line.
+Example: Some students may have a scholarship.
 
 Q) What is aggregation in ER modeling?
+ans :
+Aggregation is a higher-level abstraction where a relationship set is treated as an entity to participate in another relationship.
+
+Used when you want to express a relationship about a relationship.
+
+Example:
+
+Entities: Doctor, Patient
+
+Relationship: Treats (Doctor treats Patient)
+
+Aggregation: If you want to relate "Insurance" to the "Treats" relationship (e.g., insurance covers a treatment), you treat "Treats" as an aggregated entity to form a new relationship "CoveredBy".
 
 Q) What is specialization and generalization?
+ans :
+Generalization: Bottom-up approach where common features of multiple entities are abstracted into a higher-level (general) entity.
+
+Example:
+Entities: Car, Truck
+Generalized into Vehicle entity that shares common attributes like make, model.
+
+Specialization: Top-down approach where an entity is divided into sub-entities based on some distinguishing characteristics.
+
+Example:
+Entity: Employee
+Specialized into FullTimeEmployee and PartTimeEmployee with specific attributes.
+
+
 
 🔑 Keys and Constraints
 Q) What are candidate keys? How are they identified?
@@ -320,6 +527,7 @@ ans : No
 
 Q) Can a table have multiple foreign keys?
 ans : Yes
+
 
 🔄 Transactions & Concurrency
 Q) What is a transaction?
@@ -380,6 +588,8 @@ ans : dirty read  : Transaction2 reads the older data till the transaction1 not 
 
 Q) How does snapshot isolation work?
 
+
+
 🔄 Indexing
 Q) What is an index in DBMS?
 ans :  
@@ -407,6 +617,8 @@ Q) What is a full table scan?
 Q) What is a composite index?
 
 Q) How to choose columns for indexing?
+
+
 
 🛠️ Advanced Concepts
 Q) What is partitioning in databases?
@@ -459,6 +671,8 @@ Q) What is a snowflake schema?
 
 Q) What is a fact table and dimension table?
 
+
+
 🔐 Security & Recovery
 Q) What is database security?
 
@@ -489,6 +703,8 @@ Q) What is database mirroring?
 Q) What is RAID and how is it related to DB?
 
 Q) What is data masking?
+
+
 
 📈 Query Optimization & Performance
 Q) What are execution plans?

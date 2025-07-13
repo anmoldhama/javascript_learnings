@@ -3,9 +3,8 @@ What is MySQL and how is it different from SQL?
 ans : it is a software to manage the relational databases and SQL is a structured query language.
 
 What are the different data types supported by MySQL?
-ans : varchar
-      char
-      number
+ans : CHAR, VARCHAR, TEXT, INT, BIGINT, DECIMAL, FLOAT, DATE, DATETIME, BOOLEAN, ENUM, JSON, etc.
+
 
 How do you create a database in MySQL?
 ans : create database name db_name;
@@ -14,93 +13,197 @@ How do you create a table in MySQL?
 ans : create table name table_name;
 
 What is the difference between CHAR and VARCHAR?
-ans : varchar is used to predefine the length of the column.
-      whereas char is not have the fixed length;
+ans : CHAR is used for fixed-length strings — it always stores exactly the defined length by padding with spaces if needed.
+
+VARCHAR is used for variable-length strings — it stores only the actual content and is more space-efficient for data with varying lengths.
 
 How do you insert data into a MySQL table?
 ans : 
 
 How do you update records in a table?
+ans :  update table_name
+       set column_name = ""
+       where id = "1";
 
 How do you delete records from a table?
+ans : delete from table_name
+      where id = "1";
 
 What is the use of the SELECT statement?
+ans : to get the data from the table
 
 How do you fetch only unique records from a table?
+ans : using group by
 
 📚 11–20: Constraints and Keys
 What is a primary key in MySQL?
+ans : primary key is a unique identifier of a row in the table
 
 What is the difference between primary key and unique key?
+ans :
+| Feature           | **Primary Key**                                    | **Unique Key**                                 |
+| ----------------- | -------------------------------------------------- | ---------------------------------------------- |
+| **Uniqueness**    | Must be **unique**                                 | Must be **unique**                             |
+| **Nulls Allowed** | **Not allowed** to be null                         | **Allows** one or more `NULL` values           |
+| **Default Index** | Automatically creates a **clustered index**        | Creates a **non-clustered index**              |
+| **Per Table**     | Only **one** primary key per table                 | You can have **multiple unique keys**          |
+| **Purpose**       | Identifies **each row uniquely** (main identifier) | Enforces **additional uniqueness constraints** |
+
 
 What is a foreign key in MySQL?
+ans : foreign key is a constraint in mysql which is refer to the primary key in another table
 
 How does a foreign key enforce referential integrity?
+ans : you can delete both the rows in both tables if you want to remove the data.
 
 What is a NOT NULL constraint?
+ans : It prevents the null data to be inserted in any column
 
 What is a CHECK constraint and how is it used in MySQL?
+ans : 
+A CHECK constraint in MySQL ensures that values in a column meet a specific condition. If the condition is not satisfied, the insert or update is rejected.
 
 What is the difference between DEFAULT and AUTO_INCREMENT?
+ans : 
+| Feature            | `DEFAULT`                             | `AUTO_INCREMENT`                                |
+| ------------------ | ------------------------------------- | ----------------------------------------------- |
+| Purpose            | Sets a **default value** for a column | Automatically generates **incremented numbers** |
+| Use Case           | Optional fields with default values   | Usually used for primary keys or IDs            |
+| Applies To         | Any data type                         | Integer types only                              |
+| Can Be Overridden? | Yes, by explicitly specifying a value | Yes, but usually left empty                     |
+
 
 Can a table have multiple foreign keys?
+ans : yes a table have multiple foreign keys
 
 Can a table have more than one primary key?
+ans :  No
 
 What is a composite primary key?
+ans : 
+A composite primary key is a primary key made up of two or more columns that together uniquely identify a row in the table. This is useful when no single column is unique by itself.
 
 🔍 21–30: Joins & Subqueries
 What are the different types of joins in MySQL?
+ans : Inner join, left join, right join, full outer join, cross join, self join.
 
 Explain the difference between INNER JOIN and LEFT JOIN.
+ans : Inner join gives only the matched data in both the tables
 
 What is a CROSS JOIN?
+ans : Cross join 
 
 What is a SELF JOIN? Give an example.
+ans : self join gives the data by seperating the columns in a single table.
 
 How do you perform a JOIN across multiple tables?
+ans : table a join table b and table c join table d and table e join table f on a.id = b.id and c.id = d.id and e.id = f.id
 
 What is the performance impact of JOINs on large tables?
+ans : we can search the data in more than one tables so it will take time and when we increase the joins so the query will take time
 
 What are correlated subqueries?
+ans : subqueries are the inner queries when we find any row inside a main query so we can use the sub query
 
 How are subqueries different from JOINs?
+ans : JOINs combine data from multiple tables into a single result set.
+
+Subqueries return a single value or result set used by the outer query.
+
+JOINs are often faster than correlated subqueries.
+
+Subqueries are easier to isolate logic but may be less performant.
 
 What happens if a JOIN condition is omitted?
+ans : If a JOIN condition is omitted, it results in a CROSS JOIN, returning the Cartesian product of both tables — which can lead to millions of rows and performance issues.
 
 Can subqueries be used in the SELECT clause?
+ans : yes 
 
 ⚙️ 31–40: Indexing & Performance
 What is an index in MySQL?
+ans : index is a seperate storage that provide the faster query result by directly referencing the row in main database.
 
 How does indexing improve query performance?
+ans : By storing the value with the address of the row from the main table inside an another space 
+     and we query to the same column so it will directly referencing the address in the main table.
 
 What are the types of indexes in MySQL?
+ans : Primary Index (automatically created on primary key)
+
+Unique Index
+
+Composite (Multi-column) Index
+
+Full-Text Index
+
+Spatial Index (used for GIS data)
+
+Foreign Key Index (automatically created)
 
 What is a composite index?
+ans : This index is created on group of columns.
 
 How do you create an index on multiple columns?
+ans : CREATE INDEX idx_name ON table_name (col1, col2);
 
 What are some scenarios where indexes should not be used?
+ans : where you have the high right operations because when you update the data it should be update in the indexes and your right operation will be expensive.
 
 How do you check if a query is using an index?
+ans : EXPLAIN SELECT * FROM users WHERE email = 'a@example.com';
 
 How can you view all indexes on a table?
+ans : SHOW INDEX FROM table_name;
 
 What is the difference between clustered and non-clustered indexes?
+ans : 
+| Feature           | Clustered Index (InnoDB default)          | Non-clustered Index                      |
+| ----------------- | ----------------------------------------- | ---------------------------------------- |
+| **Data Storage**  | Actual table rows **stored in index**     | Index contains **pointers** to data rows |
+| **Table Support** | MySQL's InnoDB supports 1 clustered index | Multiple non-clustered indexes allowed   |
+| **Speed**         | Faster for **range scans**                | Slower than clustered for large scans    |
+| **Primary Key**   | Automatically becomes clustered index     | Other indexes are non-clustered          |
+
 
 What is a full-text index?
+ans : 
+A full-text index allows efficient text searching within large text columns using natural language or boolean modes.
 
 🔒 41–50: Transactions & Isolation Levels
 What is a transaction in MySQL?
+ans : transaction are the group of operations which are executed completely or none of them.
 
 What are the properties of a transaction (ACID)?
+ans : acid stands for Atomicity, Consistency, Isolation, Durability.
 
 How do you start, commit, and rollback a transaction in MySQL?
+ans :
+START TRANSACTION;
+-- or BEGIN;
+
+-- Perform your queries
+UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+UPDATE accounts SET balance = balance + 100 WHERE id = 2;
+
+-- Commit if everything is OK
+COMMIT;
+
+-- Or rollback if something goes wrong
+ROLLBACK;
 
 What are the different isolation levels in MySQL?
+ans :
+READ UNCOMMITTED – Allows dirty reads (see uncommitted data).
+
+READ COMMITTED – Only committed data can be read.
+
+REPEATABLE READ (default) – Ensures repeated reads return the same result.
+
+SERIALIZABLE – Highest level; locks rows to prevent others from modifying or inserting.
 
 What is dirty read, non-repeatable read, and phantom read?
+ans : 
 
 What is the default isolation level in MySQL?
 

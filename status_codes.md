@@ -11,7 +11,6 @@ These codes indicate that the request was received and understood. They are prov
 103 Early Hints: Used to return some headers before the final HTTP message.
 
 
-
 2xx - Success(7)
 
 Indicates that the client's request was successfully received, understood, and accepted.

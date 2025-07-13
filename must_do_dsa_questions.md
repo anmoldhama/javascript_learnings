@@ -329,6 +329,22 @@ var findPeakElement = function(nums) {
 };
 
 
+var findPeakElement = function(nums) {
+
+    if(nums.length <= 1) return 0;
+     
+     for(let i = 1; i<nums.length; i++){
+         
+         if(nums[i] < nums[i-1]){
+              return i-1;
+         }
+     }
+      
+      return nums.length -1;
+
+};
+
+
 15 - Binary Search Implementation ⭐
 function binarySearch(arr,target){
    let left = 0;
@@ -435,25 +451,48 @@ var pivotIndex = function(nums) {
 
 
 22 - Majority Element (Count > n/2) ⭐
-function majority(arr){
-     let obj = {};
-     
-     for(let i = 0; i<arr.length; i++){
-         if(obj[arr[i]]){
-             obj[arr[i]] += 1;
-         }else{
-             obj[arr[i]] = 1;
-         }
-     }
-     let max = -Infinity;
-     for(key in obj){
-         if(obj[key] > max){
-             max = obj[key];
-         }
-     }
-     
-     return max;
-}
+var majorityElement = function(nums) {
+   let obj = {};
+
+   for(let i = 0; i<nums.length; i++){
+      if(obj[nums[i]]){
+         obj[nums[i]] += 1;
+      }else{
+        obj[nums[i]] = 1;
+      }
+   }
+   console.log(obj);
+   
+   let max;
+   let max_value = -Infinity;
+   for(let key in obj){
+      if(obj[key] > max_value){
+        max = key;
+        max_value = obj[key];
+      }
+   }
+
+   return Number(max);
+};
+
+
+var majorityElement = function(nums) {
+   let curr_element = -1;
+   let count = 0;
+
+   for(let i = 0; i<nums.length; i++){
+        if(count == 0){
+            curr_element = nums[i];
+        }
+        if(curr_element == nums[i]){
+            count++;
+        }else{
+            count--;
+        }
+   }
+
+   return curr_element;
+};
 
 23 - Squares of Sorted Array ⭐
 
@@ -552,6 +591,112 @@ var longestConsecutive = function(nums) {
     return maxLength;
 };
 
+
+
+var longestConsecutive = function(nums) {
+    
+    let set = new Set();
+    
+    for(let i = 0; i<nums.length; i++){
+        set.add(nums[i]);
+    };
+
+    let left = 0;
+
+    let result = [];
+    
+    while(set.has(nums[left] - 1)){
+         let current = [nums[left]];
+        if(left < nums.length){
+      
+       current.push(nums[left]);
+        }
+
+        if(current.length > result.length){
+            result = current;
+        }
+
+        left++;
+    }
+
+    return left;
+};
+
+
+my understanding
+
+
+var longestConsecutive = function(nums) {
+
+    if(nums.length == 0) return 0;
+
+    if(nums.length === 1) return 1;
+    
+    let longest = 0;
+
+    nums.sort((a,b)=> a-b);
+
+    let current = 1;
+
+    for(let i = 1; i< nums.length; i++){
+
+        if(nums[i-1] == nums[i]){
+            continue;
+        }
+        let match = nums[i-1] + 1;
+
+        if(match == nums[i]){
+            current += 1;
+        }else{
+            if(current > longest){
+                longest = current;
+            }
+
+            current = 1;
+        }
+    }
+
+    if(current > longest){
+        longest = current;
+    }
+
+    return longest;
+};
+
+
+var longestConsecutive = function(nums) {
+
+    if(nums.length == 1) return 1;
+
+    if(nums.length < 1) return 0;
+
+    nums.sort((a,b)=> a-b);
+
+    // [0,1,1,2]
+
+    let current = 1;
+    let max = 0;
+
+    for(let i = 1; i<nums.length; i++){
+        if(nums[i-1] + 1 == nums[i]){
+            current++; // 3
+
+            if(current > max){
+               max = current; // 2
+            }
+        }else if(nums[i-1] + 1 != nums[i] && nums[i-1] !== nums[i]){
+            current = 1;
+        }
+
+    }
+    if(current > max){
+        max = current;
+    }
+
+    return max;
+
+};
+
 26 - Container With Most Water ⭐⭐
 
 var maxArea = function(height) {
@@ -612,7 +757,41 @@ var threeSum = function(nums) {
 
 };
 
-28 - Insert Interval ⭐⭐
+28 - Insert Interval ⭐⭐  needs to clear the indexes of overlapping
+
+var insert = function(intervals, newInterval) {
+    let result = [];
+
+    let i = 0;
+    let n = intervals.length;
+     
+     // add before the overlapping
+
+    while(i<n && intervals[i][1] < newInterval[0]){
+         result.push(intervals[i]);
+         i++;
+    }
+
+
+     // add overlapping
+     while(i<n && intervals[i][0] <= newInterval[1]){
+         newInterval[0] = Math.min(intervals[i][0], newInterval[0]);
+         newInterval[1] = Math.max(intervals[i][1], newInterval[1]);
+         i++;
+     }
+     result.push(newInterval);
+
+
+     // add after the overlapping
+
+     while(i<n){
+        result.push(intervals[i]);
+        i++;
+     }
+
+     return result;
+
+};
 
 29 - Non-overlapping Intervals ⭐⭐
 
@@ -621,6 +800,40 @@ var threeSum = function(nums) {
 31 - Jump Game (Can reach end?) ⭐⭐
 
 32 - Merge Intervals ⭐⭐
+
+var merge = function(intervals) {
+   // sort the intervals array
+   // create a new array merged and pushed the first array of intervals into it
+   // loop over the intervals array
+   // get the last array from merged using merged[merged.length - 1];
+   // get the current using intervals[i];
+   // check if (current first element <= last second element);
+   // then last second element will be max between current second element or last second element;
+   // else  push the current into the merged array because there is no over lap
+   // return the merged at the end
+
+
+   if(intervals.length <= 0) return intervals;
+
+   intervals.sort((a,b)=> a[0]-b[0]);
+
+   let merged = [intervals[0]];
+
+   for(let i = 0 ; i < intervals.length; i++){
+      let last = merged[merged.length-1];
+      let current = intervals[i];
+
+      if(current[0] <= last[1]){
+         last[1] = Math.max(current[1], last[1]);
+      }else{
+         merged.push(current);
+      }
+   }
+
+   return merged;
+
+};
+
 
 33 - Find Duplicate Number (Modify array) ⭐⭐
 var findDuplicate = function(nums) {
@@ -637,7 +850,70 @@ var findDuplicate = function(nums) {
 
 34 - H-Index (Research papers) ⭐⭐
 
-35 - Gas Station Problem ⭐⭐
+var hIndex = function(citations) {
+    // create an array with citations.length +1;
+    // iterate over the citations and increase the count of the matching value on     the index at new array
+    // create a count initialize with zero
+    // iterate over over a new array from the end
+    // count += arr[i]
+    // if count >= i 
+    // return i
+     // else return 0;
+
+
+     let arr = new Array(citations.length + 1).fill(0);
+
+     let left = 0;
+
+     for(let i = 0; i<citations.length; i++){
+        left = citations[i];
+        if(citations[i] >= arr.length){
+            arr[arr.length-1]++;
+        }else{
+              arr[left]++;
+        }
+
+       
+     } 
+
+     let count = 0;
+     for(let i = arr.length - 1; i >= 0; i--){
+         count += arr[i];
+         if(count >= i){
+            return i;
+         }
+     }
+
+     return 0;
+
+};
+
+35 - Gas Station Problem ⭐⭐   need more focus to understand
+
+var canCompleteCircuit = function(gas, cost) {
+     let totalDiff = 0;
+     let fuel = 0;
+     let index = 0;
+     
+     for(let i = 0; i< gas.length; i++){
+        let diff = gas[i] - cost[i];
+        totalDiff += diff;  // why
+        fuel += diff;  
+
+        if(fuel < 0){
+            index = i + 1;
+            fuel = 0;
+        }
+     }
+
+     if(totalDiff < 0){
+         return -1
+     }
+
+     return index;
+
+};
+
 
 36 - Candy Distribution ⭐⭐⭐
 
@@ -1166,6 +1442,38 @@ var convert = function(s, numRows) {
        return result;
 };
 
+
+
+  #  This is more preferable
+var convert = function(s, numRows) {
+     
+     if(numRows <= 1) return s;
+
+    let result = new Array(numRows).fill('');
+
+    let counter = false;
+    let prefix = 0;
+
+    for(let i = 0; i<s.length; i++){
+
+        result[prefix] += s[i];
+
+        if(prefix === 0 || prefix === numRows-1){
+            counter = !counter;
+        }
+
+        if(counter){
+            prefix++;
+        }else{
+            prefix--;
+        }
+    }
+
+    return result.join('');
+};
+
+
+
 58 - Letter Combinations of Phone Number ⭐⭐
 
 59 - Generate Valid Parentheses ⭐⭐
@@ -1274,3 +1582,959 @@ _.get({ a: { b: 2 } }, 'a.b') // 2
 99 - Invert Object Keys/Values ⭐
 
 100 - Serialize/Deserialize Object ⭐⭐
+
+
+
+
+
+
+
+ # 15-06-2025
+
+
+ Q) multiply strings
+
+
+ var multiply = function(num1, num2) {
+
+    if(num1 === '0' || num2 === '0') return '0';
+    // create res array of length num1 + num2 filled with zeroes
+
+     let res = new Array(num1.length + num2.length).fill(0);
+   // traverse using two nested arrays
+     for(let i = num1.length -1; i>=0; i--){
+         let n1 = num1.charCodeAt(i) - '0'.charCodeAt(0);
+
+         for(let j = num2.length -1; j>=0; j--){
+            let n2 = num2.charCodeAt(j) - '0'.charCodeAt(0);
+
+
+            let sum = n1 * n2 + res[i+j+1];
+
+            res[i+j+1] = sum % 10;
+            res[i+j] += Math.floor(sum/10);
+         }
+     }
+   // traverse from the end
+   // get the last character of both the strings as number n1 and n2;
+   //  get the sum as n1 * n2 + res[i+j+1];
+   // insert at the correct position
+   //  res[i +j +1] = sum % 10;
+   // res[i +j] += Math.floor(sum/10);
+   // remove the zeroes
+   // join to string
+
+    while(res[0] === 0){
+            res.shift();
+         }
+
+
+         return res.join('');
+};
+
+
+
+
+
+
+
+# Simple problems
+
+Q)  sum of first n numbers
+
+// mathematics progression
+
+function sum(n){
+    let sum = n * (n+1)/2;
+    return sum;
+}
+
+console.log(sum(5));
+
+
+
+
+
+
+#  21-06-2025
+
+
+Q 1752)  Check if Array Is Sorted and Rotated ?
+
+var check = function(nums) {
+    let count = 0;
+    for(let i = 1; i<nums.length; i++){
+
+        // if previous index value is larger then the current so it is not sorted then increase the count 
+       if(nums[i] < nums[i-1]){
+          count++; // 1
+       }
+    }
+
+    // if an sorted array rotated then the start index value can not be smaller then the last index value
+    if(nums[nums.length-1] > nums[0]){
+        count++;
+    }
+    
+    // if the counter is greater then 1 so return false else return true
+    if(count > 1){
+        return false;
+    }
+    return true;
+};
+
+
+Q.485) Max Consecutive Ones ?
+
+var findMaxConsecutiveOnes = function(nums) {
+    let left = 0;
+    let current = 0;
+    let max = 0;
+     while(left<nums.length){
+        if(nums[left] == 1){
+           current++;
+        }else{
+            current = 0;
+        }
+
+        if(current > max){
+           max = current;
+        }
+
+        left++;
+     }
+
+     return max;
+};
+
+
+
+Q.136) var singleNumber = function(nums) {
+    let obj = {};
+
+    for(let i = 0; i<nums.length; i++){
+        if(obj[nums[i]]){
+            obj[nums[i]]++;
+        }else{
+            obj[nums[i]] = 1;
+        }
+    }
+
+    for(let key in obj){
+        if(obj[key] == 1){
+            return Number(key);
+        }
+    }
+    
+    return -1;
+};
+
+
+# 22-06-2025
+
+1) Longest subarray sum equals to k without having negative values(use the sliding window)   needs to do one more time  
+
+function longestSubarray(arr, k){
+    let right = 0;
+    let sum = 0;
+    let max = 0;
+    let left = 0;
+    
+    
+    while(right < arr.length){
+       // add every element into the sum
+       sum += arr[right];
+       
+       // contnuously check if sum > k if true then remove the left element from the sum
+       while(sum > k){
+           sum -= arr[left];
+       }
+       // check if sum == k if true then check the length with the max;
+       if(sum == k){
+           if(right - left + 1 > max){
+               max = right - left + 1;
+           }
+       }
+       right ++;
+    }
+    
+    return max;
+}
+console.log(longestSubarray([1,2,1,0,1,1],4));
+
+
+2) Longest subarray sum equals to k also include the negative numbers     needs to do one more time
+
+function longestSubarray(arr, k){
+  let max = 0;
+  let sum = 0;
+   // create a Object
+   let obj = new Map();
+   
+   // add the element to the sum each time
+   for(let i = 0; i<arr.length; i++){
+     
+     sum += arr[i];
+     
+     // if sum == k then maxLen is i+1
+     if(sum == k){
+       max = i+1;
+     }
+   
+   // check if obj has the sum - k then compare the maxLen with i- obj[sum-k]
+   if(obj.has(sum-k)){
+     if(i-obj.get(sum-k) > max){
+       max = i-obj.get(sum-k);
+     }
+   }
+   
+   // check if !obj[sum] add the obj[sum] = i;
+    if(!obj.has(sum)){
+      obj.set(sum,i);
+    }
+    
+   }
+   
+   // return max
+   return max;
+}
+console.log(longestSubarray([-1, 0, 1, 1, -1, -1, 0],2));
+
+
+3) 2 sum
+
+var twoSum = function(nums, target) {
+ // create an obj which stores each element
+ let obj = {};
+
+for(let i = 0; i<nums.length; i++){
+
+ // calculate the compliment at every stage
+ let compliment = target - nums[i];
+
+ // if obj[compliment] true then simpley return the index of the compliment and current index as an array
+ if(obj.hasOwnProperty(compliment)){
+    return [obj[compliment],i];
+ }
+
+ // else store the element with the index
+ obj[nums[i]] = i;
+}
+    
+};
+
+4) Sort an array of 0's 1's and 2's ?
+
+
+var sortColors = function(nums) {
+    let count = 0;
+    let result = []
+
+    for(let i = 0; i<nums.length; i++){
+        if(nums[i] == 0){
+            result[count++] = 0;
+        }
+    }
+
+    for(let i = 0; i<nums.length; i++){
+        if(nums[i] == 1){
+            result[count++] = 1;
+        }
+    }
+
+    for(let i = 0; i<nums.length; i++){
+        if(nums[i] == 2){
+            result[count++] = 2;
+        }
+    }
+
+    for(let i = 0; i<nums.length; i++){
+        nums[i] = result[i];
+    }
+};
+
+
+5) Majority element without using object
+
+var majorityElement = function(nums) {
+   let count = 0;
+    let current = -1;
+
+for(let i = 0; i<nums.length; i++){
+   if(count == 0){
+      current = nums[i];
+   }
+
+   if(current == nums[i]){
+        count++;
+    }else{
+        count--;
+    }
+  
+}
+ return current;
+
+};
+
+
+6) Kadane's Algorithm, maximum subarray sum ?
+
+var maxSubArray = function(nums) {
+
+if(nums.length <= 1) return nums[0]; 
+
+   let current = 0;
+   let max = -Infinity;
+
+   for(let i = 0; i<nums.length; i++){
+        current += nums[i];
+
+        if(current > max){
+            max = current;
+        }
+
+        if(current < 0){
+            current = 0;
+        }
+
+
+
+   }
+
+   return max;
+};
+
+
+# 23-06-2025
+1) Print subarray with maximum subarray sum (extended version of above problem) ?
+
+
+function print subArray(){
+let result = [];
+     let current = 0;
+     let max = -Infinity;
+     for(let i = 0; i < n; i++){
+          current += arr[i];
+          result.push(arr[i]);
+
+          if (current < 0) {
+               current = 0;
+               result = [];
+          }
+
+          if (current > max) {
+              max = current;
+          }
+
+     }
+
+     return result;
+
+}
+
+2) 121. Best Time to Buy and Sell Stock (calculate the smallest and current profit for every i)
+
+var maxProfit = function(prices) {
+    let smallest = +Infinity;
+    let max = -Infinity;
+    let profit;
+
+    for(let i = 0; i<prices.length; i++){
+        if(smallest > prices[i]){
+            smallest = prices[i];
+        }
+        profit = prices[i] - smallest;
+
+        if(profit > max){
+            max = profit;
+        }
+
+    }
+
+    return max;
+};
+
+
+3) Rearrange Array Elements
+
+var rearrangeArray = function(nums) {
+  
+  let pos = 0;
+  let neg = 1;
+  
+  let result = [];
+
+  for(let i = 0; i<nums.length; i++){
+    if(nums[i] < 0){
+        result[neg] = nums[i];
+        neg+=2;
+    }else{
+        result[pos] = nums[i];// [3,-2,1,-5,2,-4] 
+        pos+=2;
+    }
+  }
+
+  return result;
+
+};
+
+4) 128. Longest Consecutive Sequence  
+
+var longestConsecutive = function(nums) {
+
+    if(nums.length == 1) return 1;
+
+    if(nums.length < 1) return 0;
+
+    nums.sort((a,b)=> a-b);
+
+    // [0,1,1,2]
+
+    let current = 1;
+    let max = 0;
+
+    for(let i = 1; i<nums.length; i++){
+        if(nums[i-1] + 1 == nums[i]){
+            current++; // 3
+
+            if(current > max){
+               max = current; // 2
+            }
+        }else if(nums[i-1] + 1 != nums[i] && nums[i-1] !== nums[i]){
+            current = 1;
+        }
+
+    }
+    if(current > max){
+        max = current;
+    }
+
+    return max;
+
+};
+
+
+# 24-06-2025
+
+1) 560. Subarray Sum Equals K (prefix sum + hashmap approach)  do after three days
+
+ 1) A current variable to store the prefix sum as we iterate.
+
+2) A map (map) to store how many times a specific prefix sum has occurred.
+
+3) We know that if current - k has been seen before, it means the subarray between the previous sum and current adds up to k.
+
+
+var subarraySum = function(nums, k) {
+   //[1,2,3]
+  let count = 0;
+  let current = 0;
+  let map = {};
+
+  map[0] = 1;
+
+  // {"0": 1, "1": 1, "3": 1, "6": 1}
+
+  for(let i = 0; i<nums.length; i++){
+     current += nums[i]; // 6
+
+     let remove = current - k; // 3
+
+     if(map.hasOwnProperty(remove)){
+         count += map[remove]; // 2
+     }
+
+     map[current] = (map[current] || 0) + 1; // map[6] = (map[6] || 0) +  1 // 1
+  }
+
+  return count; // 2
+
+};
+
+# 25-06-2025
+ 
+1) 118. Pascal's Triangle (using the factor formula ((i-j)/(j+1)))
+
+var generate = function(numRows) {
+      let result = [];
+      for(let i = 0; i<numRows; i++){
+         let val = 1;
+         let current = [val];
+         for(let j = 0; j <i; j++){
+            val *= (i-j)/(j+1);
+            current.push(Math.round(val));
+         }
+         result.push(current);
+      }
+
+      return result;
+};
+
+2) 119. Pascal's Triangle II
+
+var getRow = function(rowIndex) {
+    let val = 1;
+    let result = [val];
+    for(j = 0;j <rowIndex; j++){
+       val *= ((rowIndex-j)/(j+1));
+       result.push(Math.round(val));
+    }
+
+    return result;
+};
+
+3) 229. Majority Element II
+
+var majorityElement = function(nums) {
+    let obj = {};
+    let target = Math.floor(nums.length / 3);
+
+    let result = [];
+
+    for(let i = 0;i <nums.length; i++){
+        if(obj.hasOwnProperty(nums[i])){
+            obj[nums[i]] += 1;
+            // if(obj[nums[i]] > target){
+            //     result.push(nums[i]);
+            // }
+        }else{
+            obj[nums[i]] = 1;
+            // if(obj[nums[i]] > target){
+            //     result.push(nums[i]);
+            // }
+        }
+    }
+    
+     for(let key in obj){
+          if(obj[key] > target){
+             result.push(Number(key))
+          }
+     }
+     return result;
+};
+
+
+4) 
+
+
+
+# 03-07-2025
+
+1. Q) 3Sum     must do after 2 days
+
+ar threeSum = function(nums) {
+  
+ nums.sort((a,b)=> a-b);
+
+ let result = [];
+
+ for(let i = 0; i <nums.length; i++){
+
+    if(i > 0 && nums[i] == nums[i-1]) continue;
+
+   let j = i+1;
+   let k = nums.length-1;
+    
+ while(j<k){
+    let sum = nums[i] + nums[j] + nums[k];
+
+    if(sum < 0){
+        j++;
+    }else if(sum > 0){
+        k--;
+    }else{
+
+        result.push([nums[i], nums[j], nums[k]]);
+        j++;
+        k--;
+        
+        while(j < k && nums[j] == nums[j-1]){
+            j++;
+        }
+        while(j < k && nums[k] == nums[k+1]){
+            k--;
+        }
+    }
+   }
+ }
+
+ return result;
+
+
+};
+
+
+2. Maximum subarray product
+
+var maxProduct = function(nums) {
+    // forward product
+    let left = 0;
+    let current = 1;
+    let max = -Infinity;
+    while(left <nums.length){
+        current *= nums[left];
+
+        if(current > max){
+            max = current;
+        }
+     
+        if(current == 0){
+            current = 1;
+        }
+
+        left++;
+    };
+
+    left = 0;
+    let right = nums.length - 1;
+
+    current = 1;
+
+    while(right > left){
+       current *= nums[right];
+
+        if(max < current){
+        max = current;
+    }
+
+       if(current == 0){
+        current = 1;
+    }
+
+    right--;
+    }
+
+    
+    // backward product
+    return max;
+
+};
+
+3. function largestSubarraySumZero(arr){
+   let max = 0;
+   let sum = 0;
+   let obj = {};
+   
+   for(let i = 0; i<arr.length; i++){
+      sum += arr[i];
+      if(sum == 0){
+         max = i + 1;
+      }else{
+         if(obj.hasOwnProperty(sum)){
+            if(max < i-obj[sum]){
+              max = i-obj[sum];
+            }
+         }else{
+            obj[sum] = i;
+         }
+      }
+   }
+   return max;
+}
+
+let arr = [15, -2, 2, -8, 1, 7, 10, 23];
+console.log(largestSubarrayZero(arr));  // 5
+
+
+4. 56. Merge Intervals
+
+var merge = function(intervals) {
+
+    intervals.sort((a,b)=> a[0]-b[0]);
+
+    let merged = [intervals[0]];
+
+    for(let i = 0; i<intervals.length; i++){
+        let last = merged[merged.length-1];
+        let current = intervals[i];
+        
+        if(current[0] <= last[1]){
+             last[1] = Math.max(current[1],last[1]);
+        }else{
+             merged.push(current);
+        }
+    }
+
+    return merged;
+
+};
+
+5. 88. Merge Sorted Array
+
+var merge = function(nums1, m, nums2, n) {
+   let i = m-1;
+   let j = n-1;
+   let k = m+n-1;
+   
+   while(j>=0){
+       if(i>=0 && nums1[i] > nums2[j]){
+           nums1[k--] = nums1[i--];
+       }else{
+           nums1[k--] = nums2[j--];
+       }
+   }
+};
+
+
+# 06-07-2025
+
+1. 485. Max Consecutive Ones
+
+var findMaxConsecutiveOnes = function(nums) {
+    let current = 0;
+    let max = 0;
+    let left = 0;
+
+    while(left < nums.length){
+        if(nums[left] == 1){
+            current += 1;
+        }else{
+            current = 0;
+        }
+
+        if(current > max){
+            max = current;
+        }
+
+        left++;
+    }
+
+    return max;
+
+};
+
+2. 1004. Max Consecutive Ones III
+
+var longestOnes = function(nums, k) {
+   // invest k correctly at right position
+   // if k less then 0 then increment the left and if zero at previous stage then give back the k
+
+   let left = 0;
+   let max = 0;
+
+   for(let i = 0; i<nums.length; i++){
+     if(nums[i] == 0){
+        k--;
+     }
+
+     while(k<0){
+        if(nums[left] == 0){
+            k++;
+        }
+
+        left++;
+     }
+
+     max = Math.max(max, i-left+1);
+   }
+
+   return max;
+};
+
+# 07-07-2025
+
+1. 424. Longest Repeating Character Replacement
+
+
+var characterReplacement = function(s, k) {
+   let left = 0;
+   let maxCount = 0;
+   let freq = new Array(26).fill(0);
+   let maxLength = 0;
+
+   for(let right = 0; right < s.length; right++){
+      let index = s.charCodeAt(right)-65;
+      freq[index]++;
+      
+      maxCount = Math.max(maxCount, freq[index]);
+     
+     // this is the main trick 
+      while((right-left+1) - maxCount > k){
+        freq[s.charCodeAt(left)-65]--;
+        left++;
+      };
+      maxLength = Math.max(maxLength, right-left+1);
+   }
+
+   return maxLength;
+};
+
+
+# 08-07-2025
+
+1. 930. Binary Subarrays With Sum
+
+var numSubarraysWithSum = function(nums, k) {
+  let prefixSum = 0;
+  let count = 0;
+  let map = {0:1};
+
+  for(let i = 0; i<nums.length; i++){
+     prefixSum += nums[i];
+
+     if(map[prefixSum -k] !== undefined){
+        count += map[prefixSum-k];
+     }
+
+     map[prefixSum] = (map[prefixSum] || 0) + 1;
+  }
+
+  return count;
+};
+
+
+2. 1248. Count Number of Nice Subarrays
+
+var numberOfSubarrays = function(nums,k){
+    let count = 0;
+    let prefixOdd = 0;
+    let map = {0:1};
+
+    for(let i = 0; i<nums.length; i++){
+        if(nums[i] % 2 != 0){
+            prefixOdd++;
+        }
+
+        if(map[prefixOdd - k] !== undefined){
+            count += map[prefixOdd-k];
+        }
+
+        map[prefixOdd] = (map[prefixOdd] || 0) + 1;
+    }
+
+    return count;
+};
+
+# 09-07-2025
+
+1. 1358. Number of Substrings Containing All Three Characters
+
+var numberOfSubstrings = function(s) {
+   let count = {a:0,b:0,c:0};
+   let res = 0;
+   let left = 0;
+
+   for(let i = 0; i<s.length; i++){
+      // increse the frequency of every element
+      count[s[i]]++;
+
+      // check while all the element are greater than 0
+      while(count['a']>0 && count['b']>0 && count['c']>0){
+        // calculate the current window occurences of all three elements
+        res += s.length-i;
+        // decrease the count[left] because want to shrink the window
+        count[s[left]]--;
+        // increase the left
+        left++;
+      }
+   }
+
+   return res;
+};
+
+2. 1423. Maximum Points You Can Obtain from Cards
+
+var maxScore = function(cardPoints, k) {
+   let leftSum = 0;
+   let rightSum = 0;
+   let n = cardPoints.length;
+
+
+   for(let i = 0; i<k; i++){
+     leftSum += cardPoints[i];
+   }
+
+   let max = leftSum;
+
+   for(let i = 0; i<k; i++){
+     rightSum += cardPoints[n-1-i];
+     leftSum -= cardPoints[k-1-i];
+
+     max = Math.max(max, rightSum + leftSum);
+   }
+
+   return max;
+};
+
+
+# 10-07-2025
+
+1.  1021. Remove Outermost Parentheses 
+
+
+var removeOuterParentheses = function(s) {
+    let ans = "";
+    let counter = 0;
+    for(let i = 0; i<s.length; i++){ // 2
+       if(s[i] == ')') counter --; // 1
+       if(counter != 0){
+          ans += s[i]; // ()
+       }
+       if(s[i] == '(') counter ++; //2
+    }
+
+    return ans;
+};
+
+2. 151. Reverse Words in a String
+
+
+var reverseWords = function(s) {
+    let arr = s.trim().split(' ');
+
+    let left = 0;
+    let right = arr.length-1;
+
+    while(left < right){
+        let temp = arr[left];
+        arr[left] = arr[right];
+        arr[right] = temp;
+        left++;
+        right--;
+    }
+    let new_arr = arr.filter(Boolean);
+    return new_arr.join(' ');
+
+};
+
+3. 1903. Largest Odd Number in String
+
+var largestOddNumber = function(num) {
+   
+   for(let i = num.length -1 ; i >= 0; i--){
+    if(Number(num[i]) % 2 != 0){
+        return num.slice(0,i+1);
+    }
+   }
+
+   return "";
+};
+
+4. 14. Longest Common Prefix
+
+var longestCommonPrefix = function(strs) {
+    
+   let prefix = strs[0];
+
+   for(let i = 0; i<strs.length; i++){
+    while(!strs[i].startsWith(prefix)){
+        prefix = prefix.slice(0,-1);
+    }
+     if(prefix.length == 0) return "";
+   }
+
+   return prefix;
+
+};
+
+
+5. 
+
+
+
+
+
+
+
+
+

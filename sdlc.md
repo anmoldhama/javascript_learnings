@@ -17,7 +17,7 @@ Cost-benefit analysis
 
 Risk management plan
 
-📋 2. Requirements Analysis
+2. Requirements Analysis
 Objective: Gather detailed functional and non-functional requirements.
 
 Key Activities:
@@ -36,7 +36,7 @@ Use case diagrams
 
 Functional requirements list
 
-🏗️ 3. Design
+3. Design
 Objective: Convert requirements into technical architecture and design.
 
 Key Activities:
@@ -53,7 +53,7 @@ Architecture diagrams
 
 UI/UX mockups
 
-💻 4. Implementation (Development)
+4. Implementation (Development)
 Objective: Develop the actual source code based on design documents.
 
 Key Activities:
@@ -72,7 +72,7 @@ Unit test cases
 
 Build scripts
 
-🧪 5. Testing
+5. Testing
 Objective: Ensure the product meets quality standards and requirements.
 
 Key Activities:
@@ -91,7 +91,7 @@ Bug reports
 
 Test summary report
 
-🚀 6. Deployment
+6. Deployment
 Objective: Release the product to the production environment.
 
 Key Activities:
@@ -110,7 +110,7 @@ Deployment documentation
 
 Rollback and monitoring setup
 
-🔧 7. Maintenance
+7. Maintenance
 Objective: Keep the system operational and enhance it as needed.
 
 Key Activities:

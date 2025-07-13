@@ -476,9 +476,7 @@ Both support sorted clustering columns (Cassandra) or range keys (DynamoDB).
 
 Makes it easy to store and query chronologically ordered data like:
 
-ts
-Copy
-Edit
+
 Comments[PostID, Timestamp] → {UserID, Text}
 Likes[PostID, UserID] → true
 ✅ 4. Highly Available
@@ -502,9 +500,7 @@ NoSQL models encourage designing schema around access patterns.
 
 For example:
 
-ts
-Copy
-Edit
+
 // DynamoDB PartitionKey: PostID, SortKey: Timestamp
 {
   PK: "POST#1234",
@@ -577,9 +573,7 @@ No support for joins, aggregations, or complex filtering.
 
 You can’t do:
 
-sql
-Copy
-Edit
+
 SELECT posts.*, users.name FROM posts JOIN users ON posts.user_id = users.id;
 You need to denormalize data manually.
 
@@ -661,9 +655,7 @@ Get trending posts (by views).
 ✅ In SQL (Postgres, MySQL)
 You'd do something like:
 
-sql
-Copy
-Edit
+
 -- Posts table
 CREATE TABLE posts (
   post_id UUID PRIMARY KEY,
@@ -683,9 +675,7 @@ CREATE TABLE comments (
 );
 Then query with SQL:
 
-sql
-Copy
-Edit
+
 SELECT * FROM posts WHERE user_id = 'abc';
 SELECT * FROM comments WHERE post_id = 'xyz' ORDER BY created_at DESC;
 You don't worry about how you’ll access it initially — just normalize it.
@@ -702,9 +692,8 @@ Queries are fast only if you query by key.
 So, you'd design based on query needs:
 
 🎯 Access Pattern 1: Get all posts by a user
-json
-Copy
-Edit
+
+
 {
   "PK": "USER#123",
   "SK": "POST#456",
@@ -712,9 +701,8 @@ Edit
   "createdAt": "2024-01-01"
 }
 🎯 Access Pattern 2: Get all comments for a post
-json
-Copy
-Edit
+
+
 {
   "PK": "POST#456",
   "SK": "COMMENT#999",
@@ -724,9 +712,7 @@ Edit
 🎯 Access Pattern 3: Get trending posts
 You might create a Global Secondary Index (GSI) like:
 
-json
-Copy
-Edit
+
 {
   "GSI_PK": "TRENDING",
   "GSI_SK": "VIEWS#10000#POST#456"
@@ -840,9 +826,7 @@ User B posted a new video
 1. Relationships Are the Core
 Subscriptions and feeds are fundamentally connections between users and content:
 
-scss
-Copy
-Edit
+
 (User)-[:FOLLOWS]->(User)
 (User)-[:SUBSCRIBED_TO]->(Channel)
 (Channel)-[:HAS]->(Video)
@@ -857,9 +841,7 @@ Traversed in constant time
 2. Efficient Fan-out Queries (Who Should See This?)
 When User B posts, you want to notify all followers:
 
-cypher
-Copy
-Edit
+
 MATCH (b:User {id: "B"})<-[:FOLLOWS]-(follower)
 RETURN follower
 Graph DBs make this extremely fast, regardless of how many followers User B has.
@@ -869,9 +851,7 @@ In SQL, this would involve multiple JOINs and indexed lookups, which get slower 
 3. Feed Generation (What Should I See?)
 To show User A’s feed:
 
-cypher
-Copy
-Edit
+
 MATCH (a:User {id: "A"})-[:FOLLOWS|SUBSCRIBED_TO]->(source)
 MATCH (source)-[:POSTED|HAS]->(content)
 RETURN content ORDER BY content.timestamp DESC
@@ -880,9 +860,8 @@ Easily retrieves relevant content from all sources User A follows/subscribes to.
 No complex JOIN logic.
 
 4. Mutual Relationships (Social Graph Use Cases)
-cypher
-Copy
-Edit
+
+
 MATCH (a:User)-[:FOLLOWS]->(b:User)-[:FOLLOWS]->(c:User)
 WHERE NOT (a)-[:FOLLOWS]->(c)
 RETURN c AS SuggestedConnection
@@ -937,9 +916,8 @@ Requests segments one-by-one via HTTP.
 The player buffers 1–2 segments ahead and decodes them for playback.
 
 🔁 Example: HTTP Chunk Request Flow
-http
-Copy
-Edit
+
+
 GET /video/720p/segment-01.ts
 GET /video/720p/segment-02.ts
 GET /video/720p/segment-03.ts
