@@ -128,65 +128,304 @@ Log reconnects, latency, dropped events
 Problem: Design a system to handle large file uploads (>2GB) from clients.
 Expectation: Use chunked uploads, temp storage, and merge logic. Ensure idempotency and failure recovery.
 
+ans : done with using the redis, multer, node streams
+
 📊 5. Implement Custom Metrics and Observability
 Problem: You want to track latency, throughput, and error rates of all API endpoints.
 Expectation: Use Prometheus with a /metrics endpoint and middleware to record metrics.
+
+ans : 
 
 🔐 6. Secure an API Gateway for Microservices
 Problem: Design an API gateway with request validation, auth checks, and rate limiting.
 Expectation: Use Node.js with middleware chaining, token validation (JWT), and a security-first mindset.
 
+ans : 
+    gateway/
+├── middleware/
+│   ├── rateLimiter.js
+│   ├── auth.js
+│   └── validate.js
+├── routes/
+│   └── proxyRoutes.js
+├── server.js
+
 🔄 7. Event-Driven Architecture Using Kafka/RabbitMQ
 Problem: Replace direct service calls with an event-driven system.
 Expectation: Use Node.js consumers/producers with message brokers, ensure idempotency and DLQs.
+ans : done
 
 💽 8. Connection Pooling and DB Load Management
 Problem: Your Node.js app is overloading the database with connections.
 Expectation: Optimize connection pools using libraries like pg or mysql2, and tune pool size per instance.
 
+ans : In MongoDB, I manage DB load by using a shared connection pool created at app startup via MongoClient or Mongoose. I tune maxPoolSize to control concurrent DB connections per instance and avoid creating connections on every request. This keeps resource usage predictable and scalable across multiple app instances
+
 🧠 9. Memory Leak Identification and Resolution
 Problem: Node.js memory usage grows linearly with requests.
 Expectation: Use heap snapshots (--inspect), identify leaks in closures or global scopes, and fix them.
+ans : 
+To debug memory leaks in Node.js, I use --inspect to capture and compare heap snapshots during normal and stressed states. I look for retained objects, uncollected closures, and unbounded caches. Fixes typically involve scoping, listener cleanup, and adding TTL or LRU strategies. I also monitor with tools like heapdump or clinic.js for deeper profiling.
 
-🧵 10. Implement Job Queue with Retry and Dead Letter Support
+🧵 10. Implement Job Queue with Retry and Dead Letter Support 
 Problem: Some async jobs fail and need retries. Others should be dead-lettered.
 Expectation: Use Bull.js or custom Redis queue with retry logic, job priority, and failure handling.
+
+ans :  
 
 📦 11. Package Modularization for Large Codebases
 Problem: Your codebase is monolithic and hard to manage.
 Expectation: Break into modules/packages (Nx, Lerna), use dependency injection, and enforce clean architecture.
 
+ans : 
+  To break down a large monolith, I use a monorepo approach with Nx or Lerna, separating each domain into its own module or package. I follow Clean Architecture to divide logic into domain, application, infrastructure, and presentation layers. I enforce boundaries using interfaces and wire everything together with dependency injection. This makes the codebase easier to test, reason about, and scale across teams or microservices
+
 📁 12. Design a Config Management System
 Problem: Manage environment configs for multiple environments and teams.
 Expectation: Use .env, Vault, or Consul. Implement a config service with fallback logic.
+
+ans : 
+To manage configs across environments and teams, I build a config module that first loads .env values for local fallback, then merges secrets from Vault or Consul in higher environments. The module validates keys, supports environment-based resolution, and uses centralized secret management to ensure security. This approach works well in monorepos and microservices where multiple teams need their own isolated but consistent config logic.
 
 🔄 13. Cache Invalidation in High-Traffic Systems
 Problem: Cached data becomes stale frequently.
 Expectation: Implement Redis with TTL, cache-aside or write-through strategies, and use versioned keys.
 
+ans : 
+
+To handle stale cache in high-traffic systems, I use Redis with TTLs, cache-aside for reads, and write-through or manual invalidation on updates. I also version my cache keys (e.g., user:v2:id) to support safe upgrades. In some cases, I implement stale-while-revalidate patterns for better latency. This keeps the cache fresh, avoids serving stale data, and ensures system consistency under load.
+
 🧾 14. Audit Logging System
 Problem: Track all user actions for compliance.
 Expectation: Log actions with metadata to a centralized system (ElasticSearch, Loki), and ensure performance.
+
+ans : 
+   I implemented a centralized audit logging system where all user actions are logged with metadata like IP, user agent, and object changes. Logs are sent asynchronously to ElasticSearch or Loki using structured JSON, optionally through a queue like Bull or Kafka. This ensures minimal latency impact, enables full-text search and compliance auditing, and supports alerting and retention policies.
+ 
 
 🛑 15. Graceful Shutdown for HTTP + Queue Workers
 Problem: When shutting down the app, jobs get lost.
 Expectation: Implement signal handlers (SIGINT, SIGTERM) and wait for in-flight requests/jobs to finish.
 
+ans :
+   To implement graceful shutdown, I register signal handlers for SIGINT and SIGTERM. On shutdown, I stop the HTTP server from accepting new requests using server.close() and allow in-flight requests to finish. I also call queue.close() (for Bull) to flush Redis and wait for running jobs to complete. Finally, I close DB and Redis connections and enforce a timeout to avoid hanging indefinitely. This ensures clean exits and prevents job loss or partial transactions during deployments or crashes.
+
+   | Signal  | Triggered By          | Intended For      | Default Behavior   |
+| ------- | --------------------- | ----------------- | ------------------ |
+| SIGINT  | Ctrl+C (keyboard)     | Manual interrupt  | Terminates process |
+| SIGTERM | kill, Docker, systemd | Graceful shutdown | Terminates process |
+
+SIGINT is sent when a user manually interrupts a process using Ctrl+C — usually during development. SIGTERM is sent by system tools like Docker or Kubernetes to indicate a graceful shutdown. In Node.js, I use process.on('SIGINT') and process.on('SIGTERM') to handle cleanup logic like closing HTTP servers, draining queues, or disconnecting from databases before exiting safely.
+  
+
 🧬 16. Design Feature Flag System
 Problem: Toggle features without deployment.
 Expectation: Implement a Node.js middleware to evaluate feature flags per user using strategies (e.g., rollout %, user ID).
+
+ans :
+  I implemented a feature flag system where feature definitions are stored in JSON or Redis and evaluated per request using middleware. Flags support strategies like percentage rollout (via hash of user ID) or allow-listing specific users. The middleware adds req.features, which lets us conditionally serve logic or views. This lets product managers toggle features instantly without deployments and supports gradual rollouts and A/B testing
 
 🧯 17. Fault Isolation Between Microservices
 Problem: A slow service causes cascading failures.
 Expectation: Use circuit breaker patterns (e.g., with opossum), timeouts, and fallback responses.
 
+ans : 
+ * Imagine you have a microservices-based system:
+    Client → API Gateway → Service A → Service B → Service C
+ * Service C becomes slow or unresponsive due to high load or a bug.
+ * Since Service B depends on C, it also slows down while waiting.
+ * Then Service A, which calls B, also gets delayed.
+ * Eventually, the entire system becomes sluggish or starts failing — even services that aren't     
+   directly broken.
+ * This is called a cascading failure.
+
+ * To prevent this domino effect, we isolate failures using three key techniques:
+
+   1. Circuit Breaker Pattern
+    *   A circuit breaker acts like a fuse — if a service fails too often, the circuit "opens",   
+        preventing further calls to the failing service temporarily.
+    *   States:  
+        Closed: Normal flow, requests are passed through.
+        Open: Too many failures; short-circuits calls for a while.
+        Half-Open: Probes if the service is back up before resuming full traffic.
+    *   Node.js Example (with opossum):
+         import CircuitBreaker from 'opossum';
+         import axios from 'axios';
+
+         const fetchData = () => axios.get('http://service-c/api');
+
+          const breaker = new CircuitBreaker(fetchData, {
+          timeout: 3000,         // Fail if no response in 3s
+          errorThresholdPercentage: 50, // Open if 50% requests fail
+          resetTimeout: 10000    // Try again after 10s
+          });
+
+         breaker.fallback(() => ({ data: "Service temporarily unavailable" }));
+
+         breaker.fire()
+         .then(res => console.log(res.data))
+         .catch(err => console.error("Request failed", err));
+
+    * I use the circuit breaker pattern using libraries like opossum in Node.js. If a downstream    
+      service fails repeatedly or is slow, the circuit opens to stop traffic temporarily and return a fallback response — this isolates the fault and prevents cascading failures.      
+    
+    2. Timeouts
+      
+     * Never wait forever for a response. Set a maximum response time for any HTTP call.
+     * I always set timeouts on HTTP calls. If a service doesn’t respond within a few seconds, I fail 
+       fast rather than letting the caller hang indefinitely. 
+     * axios.get('http://service-c/api', { timeout: 3000 }) // 3s timeout
+
+    3. Fallback Responses
+
+     * If a service fails, return a default or cached response, or degrade the functionality 
+       gracefully.   
+     * breaker.fallback(() => ({ data: "Temporarily unavailable" }));
+     * We provide fallback responses when a service is down. For example, if a pricing service fails, 
+       we return the last known price or a placeholder instead of crashing the entire checkout flow.  
+     * Summary : 
+         In microservices, a slow or failing service can cause cascading failures across the system. To prevent this, I use circuit breakers like opossum in Node.js to trip the connection when failures exceed a threshold. I combine that with timeouts to avoid long waits, and fallbacks to ensure graceful degradation. This way, even if one service fails, others stay responsive.
+    
+
+        
 🔁 18. Idempotent APIs with Retry
 Problem: Clients may retry requests due to network issues.
 Expectation: Design idempotent POST/PUT endpoints using idempotency keys and Redis or DB tracking.
 
+ans :
+
+  * A network timeout or crash can cause the client to retry a request.
+  * If the request was already processed (e.g., payment deducted, order created), retrying it again 
+    creates duplicates. 
+  * Example:
+     A user clicks “Pay” → request sent but network breaks.
+     User retries → same payment may be deducted twice if backend isn’t idempotent.
+  
+  * How to Achieve This (Pattern) :
+    1. Use Idempotency Keys
+      * Client generates a unique idempotency-key header per request.
+      * Backend stores this key with the result of the operation.
+      * On retry:
+          If key already exists → return saved result.
+          If not → process, store key + result, return response.
+    2. Store Key & Response in Redis or DB  
+      * Use Redis with expiry (for temporary requests like payment).
+      * Use DB for longer-lived operations (e.g., order creation).
+
+  * Node.js + Redis Example :
+          import express from 'express';
+          import Redis from 'ioredis';
+         import { v4 as uuid } from 'uuid';
+
+         const app = express();
+         app.use(express.json());
+         const redis = new Redis();
+
+         app.post('/create-order', async (req, res) => {
+         const key = req.headers['idempotency-key'];
+
+         if (!key) return res.status(400).json({ error: 'Idempotency-Key missing' });
+
+         // Check if this key already exists
+          const cached = await redis.get(`idempotency:${key}`);
+         if (cached) return res.status(200).json(JSON.parse(cached));
+
+         // 🚀 Do actual processing (e.g., save order to DB)
+         const result = { orderId: uuid(), status: 'created' };
+
+          // Store result in Redis (expire in 10 minutes)
+         await redis.set(`idempotency:${key}`, JSON.stringify(result), 'EX', 600);
+
+          return res.status(201).json(result);
+          });
+ 
+
 📡 19. Build a Notification Delivery System (Email/SMS/Push)
 Problem: Handle retries, failures, and user preferences.
 Expectation: Use a job queue, a unified abstraction layer, and support multiple channels.
+ans :
+       
+ Challenges:
+
+✅ Respect user preferences (e.g., user wants only email, no SMS)
+
+🔁 Retries on failures (e.g., email server is down)
+
+💥 Prevent duplicate or missed notifications
+
+⏱️ Ensure asynchronous and scalable delivery
+
+Expectation (Core Principles):
+Job Queue for async processing & retries
+
+Unified Abstraction Layer to handle multiple channels
+
+Configurable User Preferences
+
+Retries with backoff
+
+Logging & Dead Letter Queue
+
+🏗️ System Architecture (Node.js-based):
+
+ Client / Event → Notification Producer → Queue (BullMQ / RabbitMQ)
+                                                 ↓
+                                Notification Worker (Consumer)
+                               ↙         ↓         ↘
+                           EmailSvc   SmsSvc     PushSvc
+
+
+# Components:
+1. Event Producer
+Triggered by business events (e.g., order placed)
+
+Pushes job to queue:
+
+await queue.add('sendNotification', {
+  userId,
+  type: 'ORDER_CONFIRMED',
+  channels: ['email', 'sms'],
+});
+2. Job Queue
+Use BullMQ (Redis-based) or RabbitMQ
+
+Retry config, exponential backoff, dead letter queue (DLQ) on failures
+
+3. Worker
+Reads from queue
+
+Checks user notification preferences
+
+Uses unified handler to dispatch via selected channels
+
+4. Channel Services (Abstraction Layer)
+
+interface NotificationChannel {
+  send(to: string, content: string): Promise<void>;
+}
+
+class EmailService implements NotificationChannel {
+  async send(to, content) { /* use nodemailer */ }
+}
+
+class SmsService implements NotificationChannel {
+  async send(to, content) { /* use Twilio */ }
+}
+
+class PushService implements NotificationChannel {
+  async send(to, content) { /* FCM / OneSignal */ }
+}
+
+* I designed a notification delivery system using a job queue to handle async sending of messages across email, SMS, and push. Each notification is pushed into a queue, and a worker consumes it. Before sending, it checks the user’s channel preferences, like only SMS or email.
+
+I use a unified interface pattern where each channel (email/SMS/push) implements a common interface, making the system extendable.
+
+Retries are configured with exponential backoff using BullMQ, and if all retries fail, we move the job to a dead-letter queue for investigation.
+
+This architecture ensures reliability, extensibility, and user-centric delivery.
+
+* 
+
 
 📊 20. Design Real-time Analytics Collection Pipeline
 Problem: Collect and aggregate real-time data from users (e.g., clicks, views).

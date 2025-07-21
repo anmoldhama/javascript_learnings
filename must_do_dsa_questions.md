@@ -2528,8 +2528,648 @@ var longestCommonPrefix = function(strs) {
 };
 
 
-5. 
+# 13-07-2025
 
+1. 7. Reverse Integer
+
+var reverse = function(x) {
+ let result = 0;
+  let sign = x < 0 ? -1 : 1;
+  x = Math.abs(x);
+
+  while (x > 0) {
+    let last = x % 10;
+    result = result * 10 + last;
+    x = Math.floor(x / 10);
+  }
+
+  result = result * sign;
+
+  if (result < -(2 ** 31) || result > (2 ** 31 - 1)) {
+    return 0;
+  }
+
+  return result;
+};
+
+2. 9. Palindrome Number
+
+var isPalindrome = function(x) {
+    
+    let result = 0;
+    let original = x;
+
+    while(x > 0){
+
+        let last = x % 10;
+        result = result * 10 + last;
+        x = Math.floor(x/10);
+    }
+
+    if (result == original) return true;
+    return false;
+
+};
+
+3. 1838. Frequency of the Most Frequent Element
+
+var maxFrequency = function(nums, k) {
+   nums.sort((a,b)=> a-b);
+
+   let left = 0;
+   let maxFreq = 0;
+   let total = 0;
+
+   for(let i = 0; i<nums.length; i++){
+      total += nums[i];
+
+      while((i-left+1) * nums[i] - total > k){
+        total -= nums[left];
+        left++;
+      }
+
+      maxFreq = Math.max(maxFreq, i-left+1);
+      
+   }
+
+   return maxFreq;
+};
+
+# Recursion
+ 1. Print name N times using recursion
+
+ function printNtimes(n){
+    if(n == 0) return;
+    console.log('name');
+    printNtimes(n-1);
+}
+
+printNtimes(5);
+
+2. Print 1 to N using recursion
+
+  function printtoN(n){
+    if(n == 0) return;
+    printtoN(n-1);
+    console.log(n);
+  }
+
+3. Print N to 1 using recursion
+
+   function printtoN(n){
+    if(n == 0) return;
+    console.log(n);
+    printtoN(n-1);
+  }
+
+4. Sum of first N numbers using recursion
+
+  function sum(n){
+     if(n == 1) return 1;
+     let result = n + sum(n-1);
+     return result;
+  }
+
+console.log(sum(5));
+
+5 + sum(4) // 15
+      4 + sum(3) // 10
+            3 + sum(2) // 6
+                 2 + sum(1) // 3
+                       1
+
+
+5. Factorial of N numbers
+  
+  function fac(n){
+    if(n == 1) return 1;
+
+    let result = n * fac(n-1);
+    return result;
+  }
+
+6. Reverse an array using recursion
+
+    function rev(arr,left,right){
+
+    if(left >= right) return arr;
+
+    let temp = arr[left];
+    arr[left] = arr[right];
+    arr[right] = temp;
+    
+    
+    return rev(arr,left+1,right-1);
+    
+  }
+
+console.log(rev([1,2,3,4,5],0,[1,2,3,4,5].length-1));
+
+7. fibonacci number
+
+var fib = function(n) {
+    
+   if(n == 0 || n == 1) return n;
+
+   let result = fib(n-1) + fib(n-2);
+   return result; 
+
+};
+
+
+# What is stack ?
+
+A Stack is a linear data structure that follows the LIFO principle:
+
+LIFO = Last In, First Out
+Think: a stack of plates — you remove the topmost plate first.
+
+# 2. Stack Operations
+
+| Operation   | Description                       | JS Implementation       |
+| ----------- | --------------------------------- | ----------------------- |
+| `push()`    | Add element to the top            | `stack.push(item)`      |
+| `pop()`     | Remove and return top element     | `stack.pop()`           |
+| `peek()`    | View top element without removing | `stack[stack.length-1]` |
+| `isEmpty()` | Check if stack is empty           | `stack.length === 0`    |
+| `size()`    | Number of elements                | `stack.length`          |
+
+
+# 3. Using Arrays as Stacks
+
+let stack = [];
+
+// Push
+stack.push(10);
+stack.push(20);
+
+// Peek
+console.log(stack[stack.length - 1]); // 20
+
+// Pop
+console.log(stack.pop()); // 20
+
+// Check empty
+console.log(stack.length === 0); // false
+
+
+# 4. Custom Stack Class (ES6)
+
+class Stack {
+  constructor() {
+    this.items = [];
+  }
+
+  push(element) {
+    this.items.push(element);
+  }
+
+  pop() {
+    if (this.isEmpty()) return null;
+    return this.items.pop();
+  }
+
+  peek() {
+    return this.items[this.items.length - 1];
+  }
+
+  isEmpty() {
+    return this.items.length === 0;
+  }
+
+  size() {
+    return this.items.length;
+  }
+
+  print() {
+    console.log(this.items.join(" "));
+  }
+}
+
+
+# Problems
+
+1. 20. Valid Parentheses
+
+var isValid = function(s) {
+    
+   let map = {')':'(', '}':'{', ']': '['};
+
+   let stack = [];
+
+   for(let i = 0; i<s.length; i++){
+       if(s[i] == '(' || s[i] == '{' || s[i] == '['){
+        stack.push(s[i]);
+       }else{
+           let compare = stack.pop();
+
+           if(map[s[i]] != compare){
+               return false;
+           }
+       }
+   }
+
+   if(stack.length != 0) return false;
+
+   return true;
+
+};
+
+
+
+# 14-07-2025
+
+1. 155. Min Stack
+
+
+var MinStack = function() {
+    this.stack = [];
+    this.minStack = [];
+};
+
+/** 
+ * @param {number} val
+ * @return {void}
+ */
+MinStack.prototype.push = function(val) {
+     this.stack.push(val);
+
+     if(this.minStack.length === 0 || val <= this.minStack[this.minStack.length-1]){
+        this.minStack.push(val);
+     }
+};
+
+/**
+ * @return {void}
+ */
+MinStack.prototype.pop = function() {
+   let removed =  this.stack.pop();
+
+   if(removed == this.minStack[this.minStack.length-1]){
+    this.minStack.pop();
+   }
+};
+
+/**
+ * @return {number}
+ */
+MinStack.prototype.top = function() {
+   return this.stack[this.stack.length-1];
+};
+
+/**
+ * @return {number}
+ */
+MinStack.prototype.getMin = function() {
+    return this.minStack[this.minStack.length-1];
+};
+
+/** 
+ * Your MinStack object will be instantiated and called as such:
+ * var obj = new MinStack()
+ * obj.push(val)
+ * obj.pop()
+ * var param_3 = obj.top()
+ * var param_4 = obj.getMin()
+ */
+
+
+ 2. 496. Next Greater Element I
+
+ var nextGreaterElement = function(nums1, nums2) {
+    let result = [];
+    for(let i = 0; i<nums1.length; i++){
+        let j = nums2.length-1;
+        let max = -1;
+        while(nums1[i] != nums2[j]){
+            if(nums2[j] > nums1[i]){
+               max = nums2[j];
+            }
+            j--;
+        }
+        result.push(max);
+    }
+    return result;
+};
+
+3. Next Greater Element I
+
+
+# 15-07-2025
+
+- Stack
+
+* Infix to Postfix
+
+function infixToPostfix(exp) {
+  let stack = [];
+  let result = "";
+  const precedence = { '+': 1, '-': 1, '*': 2, '/': 2, '^': 3 };
+
+  for (let ch of exp) {
+    if (/[a-zA-Z0-9]/.test(ch)) {
+      result += ch;
+    } else if (ch === '(') {
+      stack.push(ch);
+    } else if (ch === ')') {
+      while (stack.length && stack[stack.length - 1] !== '(') {
+        result += stack.pop();
+      }
+      stack.pop(); // pop '('
+    } else {
+      while (
+        stack.length &&
+        precedence[ch] <= precedence[stack[stack.length - 1]]
+      ) {
+        result += stack.pop();
+      }
+      stack.push(ch);
+    }
+  }
+
+  while (stack.length) result += stack.pop();
+  return result;
+}
+
+
+let infix = "(A+B)*C";
+console.log("Infix to Postfix:", infixToPostfix(infix));
+
+
+2. 503. Next Greater Element II
+
+var nextGreaterElements = function(nums) {
+     // use the stack compare the highest at the top of stack
+
+     // [1,2,1]
+     let stack = [];  // [1,2,]
+     let result = new Array(nums.length).fill(-1);  // [2,-1,-1]
+
+     for(let i = 0; i < 2 * nums.length; i++){  // 3
+        let index = i % nums.length; // 0
+        while(stack.length && nums[index] > nums[stack[stack.length-1]]){ // 
+            let prevIndex = stack.pop();  // 0
+            result[prevIndex] = nums[index];
+        }
+
+        if (i < nums.length) stack.push(i); 
+     }
+
+     return result;
+};
+
+
+# 16-07-2025
+
+1. Trapping rain water problem 
+
+
+
+
+2. function nextSmallerElements(arr) {
+        let stack = [];
+        let result = new Array(arr.length).fill(-1);
+
+        for(let i = 0; i< 2 * arr.length; i++){
+            let index = i % arr.length;
+            while(stack.length && arr[index] < arr[stack[stack.length-1]] ){
+               let prevIndex = stack.pop();
+               result[prevIndex] = arr[index];
+            }
+
+            if(i < arr.length) stack.push(index);
+        }
+
+        return result;
+  }
+  
+console.log(nextSmallerElements([10, 9, 8, 7]));
+
+
+# 17-07-2025
+
+1. 907. Sum of Subarray Minimums
+
+function sumSubarrayMins(arr) {
+
+    const n = arr.length;
+    const MOD = 1e9 + 7;
+
+    const prevLess = Array(n).fill(-1);
+    const nextLess = Array(n).fill(n);
+    let stack = [];
+
+    // Previous Less Element (strictly greater)
+    for (let i = 0; i < n; i++) {
+        while (stack.length && arr[stack[stack.length - 1]] > arr[i]) {
+            stack.pop();
+        }
+        prevLess[i] = stack.length ? stack[stack.length - 1] : -1;
+        stack.push(i);
+    }
+    console.log(prevLess);
+
+    stack = [];
+
+    // Next Less Element (greater or equal)
+    for (let i = n - 1; i >= 0; i--) {
+        while (stack.length && arr[stack[stack.length - 1]] >= arr[i]) {
+            stack.pop();
+        }
+        nextLess[i] = stack.length ? stack[stack.length - 1] : n;
+        stack.push(i);
+    }
+    console.log(nextLess);
+
+    // Compute result
+    let result = 0;
+    for (let i = 0; i < n; i++) {
+        const left = i - prevLess[i];
+        const right = nextLess[i] - i;
+        result = (result + arr[i] * left * right) % MOD;
+    }
+
+    return result;
+}
+
+# 18-07-2025
+
+1. 735. Asteroid Collision
+
+var asteroidCollision = function(asteroids) {
+    let stack = [];
+    let result = [];
+
+    for (let i = 0; i < asteroids.length; i++) {
+        if (asteroids[i] < 0) {
+            while (
+                stack.length &&
+                asteroids[stack[stack.length - 1]] > 0 && 
+                asteroids[stack[stack.length - 1]] < Math.abs(asteroids[i])
+            ) {
+                stack.pop();
+            }
+
+            if (
+                stack.length === 0 || asteroids[stack[stack.length - 1]] < 0
+            ) {
+
+                result.push(asteroids[i]);
+            } else if (asteroids[stack[stack.length - 1]] === Math.abs(asteroids[i])) {
+
+                stack.pop();
+            }
+
+        } else {
+            stack.push(i);
+        }
+    }
+
+    for (let i = 0; i < stack.length; i++) {
+        result.push(asteroids[stack[i]]);
+    }
+
+    return result;
+};
+
+
+
+
+2. 205. Isomorphic Strings
+
+var isIsomorphic = function(s, t) {   // not optimized code
+    
+    let map = {};
+    let arr = [];
+    for(let i = 0; i<s.length; i++){
+        if(!map.hasOwnProperty(s[i]) && !arr.includes(t[i])){
+           map[s[i]] = t[i];
+           arr.push(t[i]);
+        }else{
+           if(map[s[i]] != t[i]) return false;
+        }
+    }
+
+    return true;
+    
+
+
+};
+
+
+var isIsomorphic = function(s, t) {
+    if (s.length !== t.length) return false;
+
+    const mapST = {};
+    const mapTS = {};
+
+    for (let i = 0; i < s.length; i++) {
+        const c1 = s[i];
+        const c2 = t[i];
+
+        if ((mapST[c1] && mapST[c1] !== c2) || 
+            (mapTS[c2] && mapTS[c2] !== c1)) {
+            return false;
+        }
+
+        mapST[c1] = c2;
+        mapTS[c2] = c1;
+    }
+
+    return true;
+};
+
+
+# 20-07-2025
+
+1. 2104. Sum of Subarray Ranges
+
+var subArrayRanges = function(nums) {
+    const n = nums.length;
+
+    const getContribution = (isMin) => {
+        let prev = Array(n).fill(-1);
+        let next = Array(n).fill(n);
+        let stack = [];
+
+        // Previous
+        for (let i = 0; i < n; i++) {
+            while (
+                stack.length &&
+                (isMin ? nums[stack[stack.length - 1]] > nums[i] : nums[stack[stack.length - 1]] < nums[i])
+            ) {
+                stack.pop();
+            }
+            prev[i] = stack.length ? stack[stack.length - 1] : -1;
+            stack.push(i);
+        }
+
+        stack = [];
+
+        // Next
+        for (let i = n - 1; i >= 0; i--) {
+            while (
+                stack.length &&
+                (isMin ? nums[stack[stack.length - 1]] >= nums[i] : nums[stack[stack.length - 1]] <= nums[i])
+            ) {
+                stack.pop();
+            }
+            next[i] = stack.length ? stack[stack.length - 1] : n;
+            stack.push(i);
+        }
+
+        let sum = 0;
+        for (let i = 0; i < n; i++) {
+            let left = i - prev[i];
+            let right = next[i] - i;
+            sum += nums[i] * left * right;
+        }
+
+        return sum;
+    };
+
+    const minSum = getContribution(true);
+    const maxSum = getContribution(false);
+
+    return maxSum - minSum;
+};
+
+
+# 21-07-2025
+
+1. 402. Remove K Digits
+
+var removeKdigits = function(num, k) {
+    let stack = [];
+
+    // Step 1: Build a monotonic increasing stack
+    for (let i = 0; i < num.length; i++) {
+        while (stack.length && stack[stack.length - 1] > num[i] && k > 0) {
+            stack.pop();
+            k--;
+        }
+        stack.push(num[i]);
+    }
+
+    // Step 2: If k > 0, remove from end
+    while (k > 0) {
+        stack.pop();
+        k--;
+    }
+
+    // Step 3: Build result string
+    let result = "";
+    while (stack.length) {
+        result += stack.shift();
+    }
+
+    // Step 4: Remove leading zeros
+    while (result.length > 1 && result[0] === '0') {
+        result = result.slice(1);
+    }
+
+    return result.length ? result : "0";
+};
 
 
 

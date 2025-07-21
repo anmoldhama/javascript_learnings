@@ -593,3 +593,174 @@ Q49) A shard becomes too large compared to others. What MongoDB feature can help
 
 Q50) Your backups are large and slow. What are the strategies for faster backups and restores?
 
+
+
+
+# Basic CRUD Operations (SDE-2 Level)
+How do you insert a single document and multiple documents in MongoDB?
+ans : insertOne(document) and insertMany(documents);
+
+Write a query to find all users whose age is greater than 25.
+ans : .find({age: {$gt: 25}});
+
+How do you update the email of a user by userId in MongoDB?
+ans : .updateOne({userId : userId}, $set: {email : email})
+
+Write a query to delete all documents where status = "inactive".
+ans : .deleteMany({status: "inactive"});
+
+How do you upsert a document in MongoDB? What does upsert mean?
+ans : .updateOne({},{upsert: true});
+
+What is the difference between find() and findOne()?
+ans : .find() gives all the matched records
+      .findOne gives only the first matched record
+
+How do you implement pagination in MongoDB using skip and limit?
+ans : .find({}).skip(2).limit(5);
+
+How do you sort documents based on multiple fields?
+ans : sort({id: -1,name: -1});
+
+How do you find documents where a field exists or is missing?
+ans : .find({ name: { $exists: true } });
+
+How do you query for documents with values in an array?
+ans : .find({ "roles": {$in: ["admin", "editor"]}});
+
+🔹 Intermediate Queries (SDE-2/SDE-3 Transition)
+How do you find the top 5 products by price within a category?
+ans : .find({ category: "Electronics" }).sort({ price: -1 }).limit(5);
+
+How can you update nested fields in a MongoDB document?
+ans : .updateOne({userId: userId},$set: {address.city : "'delhi"});
+
+Write a query to pull an element from an array field inside a document.
+ans : db.users.updateOne(
+  { _id: ObjectId("...") },
+  { $pull: { roles: "guest" } }
+);
+
+How do you use $in and $nin operators? Give real-world examples.
+ans : .find({"role": {$in : ["admin", "user"]}});
+      .find({"role": {$nin : ["adimin", "user"]}});
+
+How do you match documents where a value is not equal to a certain value ($ne) and is not null?
+ans : db.users.find({ $and: [ { age: { $ne: 25 } }, { age: { $ne: null } } ] });
+
+What’s the use of the $elemMatch operator?
+ans : .find({ reviews: { $elemMatch: { rating: { $gte: 4 }, reviewer: "John" } }});
+
+How do you find documents with embedded documents that meet certain criteria?
+ans :  .find({ "address.city": "Delhi" });
+       .find({ items: { $elemMatch: { productId: "123", quantity: { $gt: 2 } }}})
+
+How do you push a new element into an array only if it doesn’t already exist?
+ans : .updateOne({ _id: ObjectId("...") },{ $addToSet: { roles: "admin" } })
+
+What are atomic operations in MongoDB? Are MongoDB updates atomic?
+ans : MongoDB atomicity is at the document level.
+
+All operations that modify a single document (like $set, $inc, $push) are atomic.
+
+How do you rename a field in all documents of a collection?
+ans : .updateMany({}, { $rename: { "oldFieldName": "newFieldName" } });
+
+🔹 Aggregation Framework (SDE-3 Level)
+How do you get the count of users grouped by country using aggregation?
+ans : db.collection.aggregate([
+      "$group": {
+            "_id" :"country",
+            count : {$sum: 1}
+      }
+]);
+
+Write a MongoDB aggregation pipeline to find average order value per customer.
+ans : db.collection.aggregate([
+      $group: {
+      _id: "$customer_id",
+      avgOrderValue: { $avg: "$order_value" }
+    }
+]);
+
+How do you perform a lookup (join) between two collections?
+ans : db.collection.aggregate([
+      "$lookup": {
+            "from": "second table",
+            "localField": "second_id",
+            "foreignField": "first_id",
+            "as" : "data"
+      }
+]);
+
+How do you filter documents before and after grouping in aggregation?
+ans : db.collection.aggregate([
+  { $match: { status: "active" } }, // Before grouping
+  {
+    $group: {
+      _id: "$category",
+      total: { $sum: "$amount" }
+    }
+  },
+  { $match: { total: { $gt: 1000 } } } // After grouping
+]);
+
+
+What is the difference between $match and $redact in aggregations?
+ans: match is used to filter the records
+     $redact provides fine-grained access control by conditionally including or excluding parts of documents, especially nested documents.
+
+How do you use $project to include/exclude fields or create computed fields?
+ans : db.collection.aggregate([
+      "$project": {
+         name : 1,
+         age : 1
+      }
+])
+
+How do you unwind an array field to flatten it in aggregation?
+ans : db.collection.aggregate([
+      "$unwind": {
+          path : "array_value",
+          preventnull : true
+      }
+])
+
+How do you paginate aggregation results using $facet or $skip + $limit?
+ans : db.collection.aggregate([
+      "$skip": 1,
+      "$limit":5
+])
+
+Write an aggregation to find total revenue generated per product.
+ans : db.collection.aggregate([
+  {
+    $group: {
+      _id: "$product_id",
+      total_revenue: { $sum: "$product_price" }
+    }
+  }
+]);
+
+
+How do you apply conditional logic (if-else) inside a $project stage?
+ans : 
+db.collection.aggregate([
+  {
+    $project: {
+      priceCategory: {
+        $cond: {
+          if: { $gte: ["$price", 100] },
+          then: "Expensive",
+          else: "Cheap"
+        }
+      }
+    }
+  }
+]);
+
+
+* $facet : Run multiple pipelines in parallel on the same input data and return all their results together.
+* $redact : Allows you to conditionally include/exclude nested fields (like documents inside arrays or sub-docs) at any depth.
+
+
