@@ -287,9 +287,6 @@ Server-Sent Events (SSE) is a unidirectional communication protocol where the se
 ✅ 1. Client Makes Initial Request
 The client (usually a browser) initiates a request using a built-in JavaScript interface:
 
-js
-Copy
-Edit
 const eventSource = new EventSource("/events");
 This makes a standard HTTP GET request to /events.
 

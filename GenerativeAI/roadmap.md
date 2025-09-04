@@ -836,3 +836,42 @@ Designed scalable GPT-as-a-Service backend with Redis-based token tracking.
 
 
 
+
+
+Updated Learning Order Including Tokenization
+
+1. PyTorch : Basics of tensors, autograd, and model building.
+
+2. Transformers Architecture :Understand self-attention, positional encoding, transformer blocks.
+
+3. Tokenization : Learn about tokenizers (WordPiece, BPE, SentencePiece).
+Understand special tokens ([PAD], [CLS], [SEP], etc.).
+Practice using Hugging Face tokenizers: loading, encoding, decoding.
+Learn about truncation, padding, and batching strategies.
+
+4. Hugging Face Transformers
+Load pretrained models & tokenizers.
+Perform inference and basic generation.
+Integrate tokenizer with model inputs/outputs.
+
+5. LLaMA : Specifics of Meta’s LLaMA model family.
+
+6. Fine-tuning (Hugging Face & LoRA)
+Fine-tune models on custom data.
+Use LoRA for efficient adaptation.
+
+7. Vector Embeddings & RAG
+Embeddings for similarity search.
+Retrieval-augmented generation pipelines.
+
+8. LangChain
+Building chains, agents, and tool integration.
+
+9. LangGraph
+Defining agent workflows and state management.
+
+10. Unsloth
+Tools for fast LLaMA training and LoRA integration.
+
+11. Diffusers
+Diffusion models for generative tasks beyond text.

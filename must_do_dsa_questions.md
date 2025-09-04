@@ -1,6 +1,6 @@
 Arrays (40 Questions)
 
-contains duplicates
+contains duplicates   **
 
 var containsDuplicate = function(nums) {
     
@@ -21,7 +21,7 @@ var containsDuplicate = function(nums) {
 };
 
 
-1 - Two Sum (Find pairs that add to target) ⭐
+1 - Two Sum (Find pairs that add to target) ⭐  **
   function two_sum(nums,target){
        
        let obj = {};
@@ -38,7 +38,7 @@ var containsDuplicate = function(nums) {
   }
 
 
-2 - Remove Duplicates from sorted array ⭐
+2 - Remove Duplicates from sorted array ⭐ **
 ans : 
 
 var removeDuplicates = function(nums) {
@@ -62,7 +62,7 @@ var removeDuplicates = function(nums) {
 };
 
 
-3 - Rotate Array by K steps ⭐⭐
+3 - Rotate Array by K steps ⭐⭐ ** 
 
 var rotate = function(nums, k) {
      k = k % nums.length;
@@ -86,7 +86,7 @@ var reverse = function(arr,left,right){
        return arr;
 }
 
-4 - Find Missing Number (1 to n) ⭐
+4 - Find Missing Number (1 to n) ⭐ ** 
 
 var missingNumber = function(nums) {
       let max = -Infinity;
@@ -120,7 +120,7 @@ var missingNumber = function(nums) {
 
 };
 
-5 - Merge Two Sorted Arrays ⭐
+5 - Merge Two Sorted Arrays ⭐ **
   done
   var merge = function(nums1, m, nums2, n) {
      let i = m -1;
@@ -142,7 +142,7 @@ var missingNumber = function(nums) {
      }
 };
 
-6 - Maximum Subarray Sum (Kadane’s) ⭐⭐
+6 - Maximum Subarray Sum (Kadane’s) ⭐⭐ ** 
 var maxSubArray = function(nums) {
     let left = 0;
     let max = -Infinity;
@@ -162,7 +162,7 @@ var maxSubArray = function(nums) {
     return max;
 };
 
-7 - Find All Duplicates in array ⭐⭐
+7 - Find All Duplicates in array ⭐⭐ **
 var duplicates = function(nums) {
    let obj = {};
     let result = [];
@@ -182,7 +182,7 @@ var duplicates = function(nums) {
    return result;
 };
 
-var findDuplicates = function(nums) {
+var findDuplicates = function(nums) {  **
     let obj = {};
 
     let count = 0;
@@ -199,7 +199,7 @@ var findDuplicates = function(nums) {
 };
 
 
-8 - Move Zeroes to end ⭐
+8 - Move Zeroes to end ⭐  ** 
 var move = function(nums) {
    let j = 0;
    
@@ -235,7 +235,7 @@ function product_array(arr){
      return output;
 }
 
-10 - First Unique Character in array ⭐
+10 - First Unique Character in array ⭐ **
 var first_unique = function(nums) {
       let obj = {};
       
@@ -254,7 +254,7 @@ var first_unique = function(nums) {
       return -1;
 };
 
-11 - Chunk Array (Split into subarrays) ⭐
+11 - Chunk Array (Split into subarrays) ⭐ **
 var chunk = function(arr, size) {
       
       let result = [];
@@ -266,7 +266,7 @@ var chunk = function(arr, size) {
    
 };
 
-12 - Flatten Nested Arrays ⭐⭐
+12 - Flatten Nested Arrays ⭐⭐  **
 var flatten_nested_arrays = function(nums) {
       let result = [];
       
@@ -329,7 +329,7 @@ var findPeakElement = function(nums) {
 };
 
 
-var findPeakElement = function(nums) {
+var findPeakElement = function(nums) {  **
 
     if(nums.length <= 1) return 0;
      
@@ -345,7 +345,7 @@ var findPeakElement = function(nums) {
 };
 
 
-15 - Binary Search Implementation ⭐
+15 - Binary Search Implementation ⭐ ** 
 function binarySearch(arr,target){
    let left = 0;
    let right = arr.length - 1;
@@ -364,7 +364,7 @@ function binarySearch(arr,target){
 }
 
 
-16 - Count Element Occurrences ⭐
+16 - Count Element Occurrences ⭐ **
 function countOccurences(arr){
      let count = {};
      
@@ -382,7 +382,7 @@ function countOccurences(arr){
 
 17 - Shuffle Array (Fisher-Yates) ⭐⭐
 
-18 - Find Min/Max without built-ins ⭐
+18 - Find Min/Max without built-ins ⭐ **
 function min_max(arr){
     let min = +Infinity;
     let max = -Infinity;
@@ -401,7 +401,7 @@ function min_max(arr){
 }
 
 
-19 - Reverse Array In-Place ⭐
+19 - Reverse Array In-Place ⭐  **
 function reverse(arr){
      let left = 0;
      let right = arr.length - 1;
@@ -450,7 +450,7 @@ var pivotIndex = function(nums) {
 
 
 
-22 - Majority Element (Count > n/2) ⭐
+22 - Majority Element (Count > n/2) ⭐ **
 var majorityElement = function(nums) {
    let obj = {};
 
@@ -476,7 +476,7 @@ var majorityElement = function(nums) {
 };
 
 
-var majorityElement = function(nums) {
+var majorityElement = function(nums) {  **
    let curr_element = -1;
    let count = 0;
 
@@ -494,7 +494,7 @@ var majorityElement = function(nums) {
    return curr_element;
 };
 
-23 - Squares of Sorted Array ⭐
+23 - Squares of Sorted Array ⭐  **
 
 function square_sort(arr){
      for(let i = 0; i<arr.length; i++){
@@ -505,7 +505,7 @@ function square_sort(arr){
      return arr;
 }
 
-function mergeSort(arr,left,right){
+function mergeSort(arr,left,right){  // must
     if(left>=right) return;
     
     let mid = Math.floor((left+right)/2);
@@ -546,7 +546,7 @@ function merge(arr,left,right,mid){
      }
 }
 
-24  - Maximum Average Subarray (Sliding Window) ⭐⭐   not remembered
+24  - Maximum Average Subarray (Sliding Window) ⭐⭐  **  done
 var findMaxAverage = function(nums, k) {
     let maxWindow = 0;
     for(let i = 0; i<k; i++){
@@ -568,7 +568,7 @@ var findMaxAverage = function(nums, k) {
 };
 
 
-25 - Longest Consecutive Sequence ⭐⭐⭐   not remembered
+25 - Longest Consecutive Sequence ⭐⭐⭐   not remembered  // must
 
 var longestConsecutive = function(nums) {
     let set = new Set(nums);
@@ -664,7 +664,7 @@ var longestConsecutive = function(nums) {
 };
 
 
-var longestConsecutive = function(nums) {
+var longestConsecutive = function(nums) {  **
 
     if(nums.length == 1) return 1;
 
@@ -697,7 +697,7 @@ var longestConsecutive = function(nums) {
 
 };
 
-26 - Container With Most Water ⭐⭐
+26 - Container With Most Water ⭐⭐  **  done
 
 var maxArea = function(height) {
     
@@ -799,7 +799,7 @@ var insert = function(intervals, newInterval) {
 
 31 - Jump Game (Can reach end?) ⭐⭐
 
-32 - Merge Intervals ⭐⭐
+32 - Merge Intervals ⭐⭐  **  done
 
 var merge = function(intervals) {
    // sort the intervals array
@@ -835,7 +835,7 @@ var merge = function(intervals) {
 };
 
 
-33 - Find Duplicate Number (Modify array) ⭐⭐
+33 - Find Duplicate Number (Modify array) ⭐⭐ **  
 var findDuplicate = function(nums) {
     let obj = {};
 
@@ -1074,7 +1074,7 @@ var intersect = function(nums1, nums2) {
 
 
 Strings (30 Questions)
-41 - Reverse String In-Place ⭐
+41 - Reverse String In-Place ⭐  **
 var reverseString = function(s) {
       let left = 0;
       let right = s.length-1;
@@ -1090,7 +1090,7 @@ var reverseString = function(s) {
       return s;
 };
 
-42 - Valid Palindrome (Ignore non-alphanumeric) ⭐
+42 - Valid Palindrome (Ignore non-alphanumeric) ⭐ **
 var isPalindrome = function(s) {
      
       let filtered = '';
@@ -1114,7 +1114,7 @@ var isPalindrome = function(s) {
       return true;
 };
 
-43 - Longest Substring Without Repeats ⭐⭐   not understand
+43 - Longest Substring Without Repeats ⭐⭐  **  done
   function longest(s){
     let max = 0;
     let left = 0;
@@ -1133,7 +1133,7 @@ var isPalindrome = function(s) {
     return max;
   }
 
-44 - Valid Anagrams ⭐
+44 - Valid Anagrams ⭐ ** 
 
 var isAnagram = function(s, t) {
     let s1 = s.split('').sort();
@@ -1148,7 +1148,7 @@ var isAnagram = function(s, t) {
     return true;
 };
 
-45 - String Compression (aaabbbcc → a3b3c2) ⭐⭐  know this but not able to do the leet code problem
+45 - String Compression (aaabbbcc → a3b3c2) ⭐⭐  know this but not able to do the leet code problem **
 var compress = function(chars) { 
     let current = chars[0];
     let result = '';
@@ -1168,7 +1168,7 @@ var compress = function(chars) {
     return result;
 };
 
-46 - First Unique Character ⭐
+46 - First Unique Character ⭐ **
 
 function firs_uni(str){
     let obj = {};
@@ -1214,7 +1214,7 @@ let str = "   anmola   ";
 console.log(trim(str));
 
 
-48 - Count Vowels/Consonants ⭐
+48 - Count Vowels/Consonants ⭐ **
 function vowel_consonant(str){
      let vowel_count = 0;
      let consonant_count = 0;
@@ -1239,7 +1239,7 @@ let str = 'anmol dhama';
 console.log(vowel_consonant(str));
 
 
-49 - Longest Common Prefix ⭐   ---- prefix smaller approach
+49 - Longest Common Prefix ⭐   ---- prefix smaller approach  **
 function largest_common_prefix(arr){
    let prefix = arr[0]; // flower
    
@@ -1282,6 +1282,7 @@ ans :
     if(s.length <=1) return false;
     let result = [];
     let map = {'(': ')', '{': '}', '[': ']'};
+
      for(let i = 0; i<s.length; i++){
         if(s[i] == '(' || s[i] == '{' || s[i] == '['){
             result.push(s[i]);
@@ -3170,6 +3171,1386 @@ var removeKdigits = function(num, k) {
 
     return result.length ? result : "0";
 };
+
+
+# 23-07-2025
+
+var lengthOfLongestSubstring = function(s) {
+    let left = 0;
+    let max = 0;
+    let set = new Set();
+
+    for(let i = 0; i<s.length; i++){
+
+        while(set.has(s[i])){
+            set.delete(s[left++]);
+        }
+
+        set.add(s[i]);
+
+        max = Math.max(max,i-left+1);
+    }
+
+    return max;
+};
+
+
+2. var longestConsecutive = function(nums) {
+
+    if(nums.length == 1) return 1;
+    if(nums.length < 1) return 0;
+
+    nums.sort((a,b)=> a-b);
+    let count = 1;
+    let longest = 0;
+
+    for(let i = 1; i<nums.length; i++){
+
+        if(nums[i] == nums[i-1] + 1){
+                count++;
+        }else if(nums[i-1] + 1 != nums[i] && nums[i-1] != nums[i]) {
+            count = 1;
+        }
+        
+        if(count > longest){
+        longest = count;
+         }
+
+    }
+
+    return longest;
+
+};
+
+
+# 25-07-2025
+
+1. 84. Largest Rectangle in Histogram   --- do in morning also
+
+var largestRectangleArea = function(heights) {
+    let stack = [];
+    let max = 0;
+    let n = heights.length;
+
+    for(let i = 0; i<=n; i++){
+
+        let current = i === n ? 0 : heights[i];
+       
+       while(stack.length && heights[stack[stack.length-1]] > current){
+           let topIndex = stack.pop();
+           let height = heights[topIndex];
+
+           let width = stack.length === 0 ? i: i- stack[stack.length - 1] - 1;
+           let area = height * width;
+           max = Math.max(max,area);
+       }
+
+       stack.push(i);
+    }
+
+    return max;
+};
+
+
+# 26-07-2025
+
+1. var maxSlidingWindow = function(nums, k) {
+     
+     let deque = [];
+     let result = [];
+
+     for(let i = 0; i<nums.length; i++){
+         
+         // remove the first element if the element is older than the current window
+
+         if(deque.length && deque[0] <= i-k){
+            deque.shift();
+         }
+
+         // remove the smaller indexes of elements compare with current
+         while(deque.length && nums[deque[deque.length - 1]] < nums[i]){
+            deque.pop();
+         }
+
+         // add the current index
+
+         deque.push(i);
+
+         // store the max if the window size is equal or greater than k
+
+         if(i >= k-1){
+            result.push(nums[deque[0]]);
+         }
+     }
+
+     return result;
+
+};
+
+2. 901. Online Stock Span
+
+var StockSpanner = function() {
+    // this will create a two d stack store price and span
+    this.stack = [];
+};
+
+StockSpanner.prototype.next = function(price) {
+    let span = 1;
+    while(this.stack.length && this.stack[this.stack.length - 1][0] <= price){
+        let [prevPrice, prevSpan] = this.stack.pop();
+        span += prevSpan;
+    }
+
+    this.stack.push([price,span]);
+    return span;
+};
+
+
+3. 146. LRU Cache    
+
+class Node {
+    constructor(key, value) {
+        this.key = key;
+        this.value = value;
+        this.prev = null;
+        this.next = null;
+    }
+}
+
+var LRUCache = function(capacity) {
+    this.capacity = capacity;
+    this.map = new Map(); // key => node
+    this.head = new Node(null, null); // dummy head
+    this.tail = new Node(null, null); // dummy tail
+    // console.log(this.tail);
+    this.head.next = this.tail;
+    // console.log(this.head);
+    this.tail.prev = this.head;
+    // console.log(this.tail);
+};
+
+LRUCache.prototype._remove = function(node) {
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
+};
+
+LRUCache.prototype._addToFront = function(node) {
+    node.next = this.head.next;
+    node.prev = this.head;
+    this.head.next.prev = node;
+    this.head.next = node;
+};
+
+LRUCache.prototype.get = function(key) {
+    if (!this.map.has(key)) return -1;
+
+    const node = this.map.get(key);
+    this._remove(node);       // move to front
+    this._addToFront(node);
+    return node.value;
+};
+
+LRUCache.prototype.put = function(key, value) {
+    if (this.map.has(key)) {
+        const node = this.map.get(key);
+        node.value = value;
+        this._remove(node);
+        this._addToFront(node);
+    } else {
+        if (this.map.size >= this.capacity) {
+            const lru = this.tail.prev;
+            this._remove(lru);
+            this.map.delete(lru.key);
+        }
+
+        const newNode = new Node(key, value);
+        this._addToFront(newNode);
+        this.map.set(key, newNode);
+    }
+};
+
+
+#  HEAP STARTS FROM HERE
+
+1. What is a Priority Queue?
+
+* A priority queue is a special type of queue where:
+* Each element is assigned a priority.
+* Elements are served (dequeued) based on their priority, not just their arrival order.
+
+By default:
+
+* Max Priority Queue: the element with the highest priority is served first.
+* Min Priority Queue: the element with the lowest priority is served first.
+
+* In contrast to a normal queue (FIFO), a priority queue removes elements in priority order.
+
+
+2. What is a Heap?
+
+* A heap is a special tree-based data structure that satisfies the heap property:
+* Max-Heap Property: Every parent node is greater than or equal to its children.
+* Min-Heap Property: Every parent node is less than or equal to its children.
+* Heaps are complete binary trees: all levels are filled except possibly the last, which is filled from left to 
+  right.
+       2
+     /   \
+    4     7
+   / \
+  5   10
+
+3.  Operations on Binary Heap:
+
+| Operation       | Time Complexity |
+| --------------- | --------------- |
+| Insert          | O(log n)        |
+| Get Min/Max     | O(1)            |
+| Extract Min/Max | O(log n)        |
+| Heapify         | O(log n)        |
+
+
+4. Min Heap and Max Heap Implementation ?
+
+
+# Step 4 : Binary Search [1D,2D Arrays, Search Space]
+
+1. 704. Binary Search
+
+var search = function(nums, target) {
+    let left = 0;
+    let right = nums.length;
+
+    while(left < right){
+        let mid = Math.floor((left + right)/2);
+
+        if(nums[mid] == target) return mid;
+
+        if(nums[mid] > target){
+            right = mid;
+        }else{
+            left = mid+1;
+        }
+    }
+
+    return -1;
+
+};
+
+2. Lower Bound : arr[i] >= x
+
+function lower_bound(arr,x){
+  
+  let left = 0;
+  let right = arr.length;
+  
+  while(left < right){
+    let mid = Math.floor((left + right)/2);
+    
+    if(arr[mid] < x){ 
+       left = mid +1;
+    }else{
+       right = mid;
+    }
+  }
+  
+  return left;
+  
+};
+
+
+let arr = [1,2,3,3,5,8,8,10,10,11];
+let x = 9;
+
+console.log(lower_bound(arr,x));
+
+3. Upper Bound arr[i] > x
+
+
+function upper_bound(arr,x){
+  
+  let left = 0;
+  let right = arr.length;
+  
+  while(left < right){
+    let mid = Math.floor((left + right)/2);
+    
+    // if(arr[mid] >= x) return mid;
+    
+    if(arr[mid] <= x){ 
+       left = mid +1;
+    }else{
+       right = mid;
+    }
+  }
+  
+  return left;
+  
+};
+
+
+let arr = [1,2,3,3,5,8,8,10,10,11];
+let x = 9;
+
+console.log(upper_bound(arr,x));
+
+
+4. 35. Search Insert Position
+
+var searchInsert = function(nums, target) {
+    
+    let left = 0;
+    let right = nums.length;
+
+    while(left < right){
+        let mid = Math.floor((left + right)/2);
+
+        if(nums[mid] == target) return mid;
+
+        if(nums[mid] < target){
+            left = mid + 1;
+        }else{
+            right = mid;
+        }
+    }
+
+    return left;
+
+};
+
+5. 
+
+Floor value =  largest in array <= x
+ceil value = smallest in array >= x
+
+function floor(arr,x){
+  
+  let left = 0;
+  let right = arr.length;
+  
+  while(left < right){
+    let mid = Math.floor((left + right)/2);
+    
+    if(arr[mid] <= x){ 
+       left = mid +1;
+    }else{
+       right = mid;
+    }
+  }
+  
+  return left-1;
+  
+};
+
+
+let arr = [1,2,3,3,5,8,8,10,10,11];
+let x = 9;
+
+console.log(floor(arr,x)); // 6
+
+
+function ceil(arr,x){
+  
+  let left = 0;
+  let right = arr.length;
+  
+  while(left < right){
+    let mid = Math.floor((left + right)/2);
+    
+    if(arr[mid] <= x){ 
+       left = mid +1;
+    }else{
+       right = mid;
+    }
+  }
+  
+  return left;
+  
+};
+
+
+let arr = [1,2,3,3,5,8,8,10,10,11];
+let x = 9;
+
+console.log(ceil(arr,x));
+
+
+# 27-07-2025
+
+1. 34. Find First and Last Position of Element in Sorted Array
+
+var searchRange = function(nums, target) {
+   
+   function firstOcc(nums,target){
+      let left = 0;
+      let right = nums.length - 1;
+      let index = -1;
+
+      while(left <= right){
+          let mid = Math.floor((left + right)/2);
+
+          if(nums[mid] >= target){
+             right = mid - 1;
+          }else{
+            left = mid + 1;
+          }
+
+            if(nums[mid] == target) index = mid;
+      }
+      return index;
+   }
+
+   function lastOcc(nums,target){
+    let left = 0;
+    let right = nums.length - 1;
+    let index = -1;
+
+    while(left <= right){
+        let mid = Math.floor((left + right)/2);
+
+        if(nums[mid] <= target){
+            left = mid + 1;
+        }else{
+            right = mid - 1;
+        }
+
+          if(nums[mid] == target) index = mid;
+    }
+
+    return index;
+   }
+
+
+   return [firstOcc(nums,target), lastOcc(nums,target)];
+
+};
+
+
+# 29-07-2025
+
+1. 33. Search in Rotated Sorted Array
+
+var search = function(nums, target) {
+    let left = 0;
+    let right = nums.length-1;
+
+    while(left <= right){
+        let mid = Math.floor((left + right)/2);
+
+        if(nums[mid] == target) return mid;
+
+        if(nums[left] <= nums[mid]){
+            if(target >= nums[left] && target <= nums[mid]){
+                right = mid;
+            }else{
+                left = mid + 1;
+            }
+        }else{
+            if(target >= nums[mid] && target <= nums[right]){
+                left = mid + 1;
+            }else{
+                right = mid;
+            }
+        }
+    }
+
+    return -1;
+};
+
+
+2. 81. Search in Rotated Sorted Array II
+
+var search = function(nums, target) {
+    
+    let left = 0;
+    let right = nums.length - 1;
+
+    while(left <= right){
+        let mid = Math.floor((left + right)/2);
+        
+        if(nums[mid] == target) return true;
+
+        if(nums[left] == nums[mid] && nums[right] == nums[mid]){
+            left++;
+            right--;
+            continue;
+        }
+
+        if(nums[left] <= nums[mid]){
+            if(target >= nums[left] && target <= nums[mid]){
+                right = mid;
+            }else{
+                left = mid + 1;
+            }
+        }else{
+            if(target >= nums[mid] && target <= nums[right]){
+                left = mid + 1;
+            }else{
+                right = mid;
+            }
+        }
+    }
+
+    return false;
+};
+
+3. 153. Find Minimum in Rotated Sorted Array
+
+var findMin = function(nums) {
+    
+    let left = 0;
+    let right = nums.length - 1;
+
+    while(left < right){
+        let mid = Math.floor((left + right)/2);
+         
+         if(nums[mid] > nums[right]){
+            left = mid + 1;
+         }else{
+            right = mid;
+         }
+    }
+
+    return nums[left];
+
+};
+
+4. 540. Single Element in a Sorted Array
+
+var singleNonDuplicate = function(nums) {
+     
+   let left = 0;
+   let right = nums.length -1;
+
+   while(left < right){
+      let mid = Math.floor((left + right)/2);
+    if(mid % 2 == 1) mid--;
+
+    if(nums[mid] === nums[mid+1]){ 
+        left = mid +2;
+    }else{
+        right = mid;
+    }
+
+   }
+
+   return nums[left];
+
+};
+
+5. 162. Find Peak Element
+
+var findPeakElement = function(nums) {
+
+  let left = 0;
+  let right = nums.length-1;
+
+  if(nums.length <= 1) return 0;
+  
+  while(left < right){
+     let mid = Math.floor((left + right)/2)
+
+     if(nums[mid] > nums[mid+1]){
+         right = mid;
+     }else{
+        left = mid +1;
+     }
+  }
+
+  return left;
+
+};
+
+# 31-07-2025
+
+1. 875. Koko Eating Bananas
+
+var minEatingSpeed = function(piles, h) {
+    let left = 0; 
+    let right = Math.max(...piles);
+    let ans = right;
+
+    while(left <= right){
+        let mid = Math.floor((left+right)/2);
+        let totalTime = calculateTime(piles,mid);
+
+        if(totalTime <= h){
+            ans = mid;
+            right = mid -1;
+        }else{
+            left = mid + 1;
+        }
+    }
+
+    return ans;
+};
+
+var calculateTime = function(piles,hourly){
+    let totalHrs = 0;
+
+    for(let i = 0; i<piles.length; i++){
+        totalHrs += Math.ceil(piles[i]/hourly);
+    }
+
+    return totalHrs;
+}
+
+2. 1482. Minimum Number of Days to Make m Bouquets
+
+var minDays = function(bloomDay, m, k) {
+     let left = 0;
+     let right = Math.max(...bloomDay);
+     let ans = -1;
+
+     if ( (m * k) > bloomDay.length) return -1;
+
+     while(left <= right){
+        let mid = Math.floor((left + right)/2);
+        
+        if(isPossible(bloomDay,mid,m,k)){
+           ans = mid;
+           right = mid - 1;
+        }else{
+            left = mid + 1;
+        }
+
+     };
+
+     return ans;
+
+};
+
+var isPossible = function(arr, day, m, k){
+   let count = 0;
+   let noOfBouq = 0;
+
+   for(let i = 0; i<arr.length; i++){
+        if(arr[i] <= day){
+            count++;
+        }else{
+            noOfBouq += Math.floor(count/k);
+            count = 0;
+        }
+   }
+   noOfBouq += Math.floor(count/k);
+   if(noOfBouq >= m){
+      return true;
+   }
+
+   return false;
+
+}
+
+# 01-08-2025
+
+1. 1283. Find the Smallest Divisor Given a Threshold
+
+var smallestDivisor = function(nums, threshold) {
+    let left = 0;
+    let right = Math.max(...nums);
+    let ans = -1;
+
+    while(left <= right){
+        let mid = Math.floor((left + right)/2);
+        
+        let total = calculateSum(nums,mid);
+
+        if(total <= threshold){
+            ans = mid;
+            right = mid - 1;
+        }else{
+            left = mid + 1;
+        }
+    }
+
+    return ans;
+};
+
+var calculateSum = function(nums,divisor){
+     
+     let totalSum = 0;
+
+     for(let i = 0; i<nums.length; i++){
+         totalSum += Math.ceil(nums[i]/divisor);
+     }
+
+     return totalSum;
+}
+
+2. 1011. Capacity To Ship Packages Within D Days
+
+var shipWithinDays = function(weights, days) {
+    let left = Math.max(...weights);
+    let right = 0;
+    let ans = -1;
+    for(let i = 0; i<weights.length; i++){
+        right += weights[i];
+    }
+    
+    while(left <= right){
+      let mid = Math.floor((left + right)/2);
+      let possible_days = no_of_days(weights,mid);
+      
+      if(possible_days <= days){
+         right = mid - 1;
+         ans = mid;
+      }else{
+        left = mid + 1;
+      }
+    }
+
+    return ans;
+   
+};
+
+var no_of_days = function(weights,capacity){
+   
+   let sum = 0;
+   let day = 1;
+   for(let i = 0; i<weights.length; i++){
+        sum += weights[i];
+     if(sum > capacity){
+         day += 1;
+         sum = weights[i];
+     }
+   }
+   return day;
+
+}
+
+# 02-08-2025
+
+1. 1539. Kth Missing Positive Number
+
+var findKthPositive = function(arr, k) {
+  // first calculate the missing by subtracting the current index from the current value
+  // if missing < k it means that the kth missing is on the right side
+  // else on the left side
+  // return left+ k : left is the count of the values that are less than the answer and k is the 
+  // kth missing number
+
+  let left = 0;
+  let right = arr.length - 1;
+
+  while(left <= right){
+    let mid = Math.floor((left + right)/2);
+
+    let missing = arr[mid] - (mid + 1);
+
+    if(missing < k){
+        left = mid + 1;
+    }else{
+        right = mid -1;
+    }
+  }
+  return left + k;
+};
+
+2. 410. Split Array Largest Sum
+
+var splitArray = function(nums, k) {
+    let left = Math.max(...nums);
+    let right = 0;
+
+    if(nums.length < k) return ans;
+
+    for(let i = 0; i<nums.length; i++){
+        right += nums[i];
+    }
+
+    let ans = right;
+
+    while(left <= right){
+        let mid = Math.floor((left + right)/2);
+        let isValid = maxSum(nums,k,mid);
+
+        if(isValid){
+           ans = mid;
+           right = mid - 1;
+        }else{
+            left = mid + 1;
+        }
+    }
+
+    return ans;
+};
+
+var maxSum = function(nums,k,number){
+    let sum = 0;
+    let count = 1;
+    for(let i = 0; i<nums.length; i++){
+        sum += nums[i];
+        
+        if(sum > number){
+            sum = nums[i];
+            count++;
+        }
+
+    }
+
+    return count <= k;
+}
+
+3. You are given an array pages[] where each element represents the number of pages in a book.
+There are n books and m students.
+
+Your task is to allocate books to students such that:
+
+Each student gets at least one book.
+
+Each book is assigned to exactly one student.
+
+Books are allocated in contiguous order.
+
+The maximum number of pages assigned to any student is minimized.
+
+
+
+function maxAllocation(arr,m){
+  let left = Math.max(...arr);
+  let right = 0;
+  
+  for(let i = 0; i<arr.length; i++){
+     right += arr[i];
+  }
+  
+  let ans = right;
+  
+  while(left <= right){
+    let mid = Math.floor((left + right)/2);
+    
+    if(isValid(arr,m,mid)){
+      right = mid - 1;
+      ans = mid;
+    }else{
+      left = mid + 1;
+    }
+  }
+  
+  return ans;
+}
+
+function isValid(arr,m,mid){
+  let count = 1;
+  let sum = 0;
+  
+  for(let i = 0; i<arr.length; i++){
+    sum += arr[i];
+    
+    if(sum > mid){
+      count++;
+      sum = arr[i];
+    }
+  }
+  
+  return count <= m;
+}
+
+let pages = [12, 34, 67, 90]
+let m = 2
+
+console.log(maxAllocation(pages,m));
+
+
+// O/P = 113
+
+
+# 04-08-2025
+
+1. QUICK SORT
+
+function quickSort(arr,left,right){
+  if(left < right){
+    let pivot = placePivot(arr,left,right);
+    quickSort(arr,left,pivot-1);
+    quickSort(arr,pivot + 1, right);
+  }
+  return arr;
+}
+
+function placePivot(arr,left,right){
+  let pivot = left;
+  let i = left;
+  let j = right;
+  
+  while(i<j){
+    while(arr[i] <= arr[pivot] && i <= right){
+      i++;
+    }
+    while(arr[j] > arr[pivot] && j > left){
+      j--;
+    }
+    if(i<j){
+      swap(arr,i,j);
+    }
+  }
+  
+  swap(arr,left,j);
+  return j;
+}
+
+function swap(arr,left,right){
+  
+  let temp = arr[left];
+  arr[left] = arr[right];
+  arr[right] = temp;
+  
+}
+
+
+let arr = [3, 1, 4, 1, 5, 9];
+
+console.log(quickSort(arr,0,arr.length-1));
+
+
+
+2. Selection Sort
+
+
+
+function selectionSort(arr){
+   
+   for(let i = 0; i<arr.length; i++){
+     let min = i;
+     for(let j = i; j<arr.length; j++){
+         if(arr[j] < arr[min]){
+              min = j;            
+         }
+     }
+     swap(arr,i,min);
+   }
+   
+   return arr;
+}
+
+function swap(arr,left,right){
+  
+  let temp = arr[left];
+  arr[left] = arr[right];
+  arr[right] = temp;
+  
+}
+
+
+let arr = [3, 1, 4, 1, 5, 9];
+
+console.log(selectionSort(arr));
+
+
+3. Bubble Sort(place bigger at the last)
+
+function bubbleSort(arr){
+    
+    for(let i = 0;i<arr.length; i++){
+        for(let j = 0; j<arr.length-i; j++){
+          if(arr[j] > arr[j+1]){
+            swap(arr,j+1,j);
+          }
+        }
+    }
+    
+    return arr;
+    
+}
+
+4. Insertion Sort(insert the element at the correct position from the last)
+
+
+
+
+# 05-08-2025
+
+1. 796. Rotate String
+
+var rotateString = function(s, goal) {
+    // s + s should includes the goal
+
+    if(s.length != goal.length) return false;
+
+    return (s+s).includes(goal);
+};
+
+2. 242. Valid Anagram
+
+var isAnagram = function(s, t) {
+    if (s.length !== t.length) return false;
+
+    const count = {};
+
+    for (let char of s) {
+        count[char] = (count[char] || 0) + 1;
+    }
+
+    for (let char of t) {
+        if (!count[char]) return false;
+        count[char]--;
+    }
+
+    return true;
+};
+
+
+3. 451. Sort Characters By Frequency
+
+var frequencySort = function(s) {
+    let freqMap = {};
+
+    for(let i = 0; i<s.length; i++){
+        if(freqMap.hasOwnProperty([s[i]])){
+            freqMap[s[i]]++;
+        }else{
+            freqMap[s[i]] = 1;
+        }
+    }
+
+    let bucket = Array(s.length + 1).fill().map(()=> []);
+    console.log(bucket);
+    for(let char in freqMap){
+        let freq = freqMap[char];
+        bucket[freq].push(char);
+    }
+
+    let result = '';
+
+    for(let i = bucket.length - 1; i>=0; i--){
+        for(let char of bucket[i]){
+             result+= char.repeat(i);
+        }
+    }
+
+    return result;
+
+
+};
+
+
+* Top Interview Questions leet code
+
+1. 88. Merge Sorted Array
+
+var merge = function(nums1, m, nums2, n) {
+    
+    let i = m-1;
+    let j = n-1;
+    let k = m+n-1;
+
+    while(j>=0){
+        if(i>=0 && nums1[i] > nums2[j]){
+            nums1[k--] = nums1[i--];
+        }else{
+            nums1[k--] = nums2[j--];
+        }
+    }
+  
+
+};
+
+2. 27. Remove Element
+
+
+var removeElement = function(nums, val) {
+    let k = 0;
+
+    for(let i = 0; i<nums.length; i++){
+        if(nums[i] != val){
+            nums[k++] = nums[i];
+        }
+    }
+
+    return k;
+};
+
+3. 26. Remove Duplicates from Sorted Array
+
+var removeDuplicates = function(nums) {
+    
+    let k = 1;
+
+    for(let i = 1; i<nums.length; i++){
+        if(nums[i] != nums[i-1]){
+            nums[k++] = nums[i];
+        }
+    }
+
+    return k;
+    
+};
+
+4. 80. Remove Duplicates from Sorted Array II
+
+var removeDuplicates = function(nums) {
+    let k = 0;
+    let freq = {};
+
+for (let i = 0; i < nums.length; i++) {
+    if (!freq.hasOwnProperty(nums[i])) {
+        freq[nums[i]] = 1;
+    } else if (freq[nums[i]] < 2) {
+        freq[nums[i]]++;
+    }
+}
+
+    for(let i = 0; i<nums.length; i++){
+        while(freq[nums[i]]){
+            nums[k++] = nums[i];
+            freq[nums[i]]--;
+        }
+    }
+    return k;
+};
+
+5. 169. Majority Element
+
+var majorityElement = function(nums) {
+
+   let count = 0;
+   let current_element = nums[0];
+
+   for(let i = 0; i<nums.length; i++){
+    if(count == 0){
+        current_element = nums[i];
+    }
+    if(current_element == nums[i]){
+        count++;
+    }else{
+        count--;
+    }
+   }
+
+   return current_element;
+
+};
+
+6. 189. Rotate Array
+
+var rotate = function(nums, k) {
+
+   k = k % nums.length;
+
+   reverse(nums,0,nums.length-1);
+   reverse(nums,0,k-1);
+   reverse(nums,k,nums.length-1);
+
+};
+
+var reverse = function (nums,left,right){
+    
+    while(left < right){
+    let temp = nums[left];
+    nums[left] = nums[right];
+    nums[right] = temp;
+     left++;
+     right--;
+    }
+    return nums;
+}
+
+
+# 06-08-2025
+
+* Top Interview Questions leet code
+
+1. 121. Best Time to Buy and Sell Stock
+
+var maxProfit = function(prices) {
+    // calculate smallest for every prices[i]
+    // calculate profit prices[i] - smallest
+    // return max;
+    
+    let smallest = +Infinity;
+    let max = 0;
+
+    for(let i =0; i<prices.length; i++){
+        if(smallest > prices[i]){
+            smallest = prices[i];
+        }
+
+        let profit = prices[i] - smallest;
+
+        if(profit > max){
+            max = profit;
+        }
+    }
+
+    return max;
+};
+
+2. 122. Best Time to Buy and Sell Stock II
+
+var maxProfit = function(prices) {
+   // add the difference in total if the arr[i] > arr[i-1]
+
+    let total = 0;
+
+    for(let i = 1; i<prices.length; i++){
+        let profit = prices[i] - prices[i-1];
+        
+        if(prices[i] > prices[i-1]){
+            total += profit;
+        }
+       
+    }
+    return total;
+
+};
+
+3. 55. Jump Game
+
+var canJump = function(nums) {
+    // calculate the size for every element if any stage the i > size
+    // return false;
+    let size = 0;
+    for(let i = 0; i<nums.length; i++){
+       if(i > size) return false;
+       size = Math.max(size, i+nums[i]);
+    }
+
+    return true;
+
+};
+
+# 09-08-2025
+
+1. 28. Find the Index of the First Occurrence in a String
+
+var strStr = function(haystack, needle) {
+        let left = 0;
+    
+        while(left <= haystack.length){
+            console.log(haystack.slice(left,needle.length));
+         if(haystack.slice(left, left+needle.length) == needle){
+             return left;
+         }
+         left++;
+        };
+
+        return -1;
+ 
+};
+
+# 10-08-2025
+
+1. 209. Minimum Size Subarray Sum
+
+var minSubArrayLen = function(target, nums) {
+    
+    let left = 0;
+    let current = 0;
+    let count = 1;
+    let min = +Infinity;
+
+    for(let i = 0; i<nums.length; i++){
+       current += nums[i];
+
+        while(current >= target){
+            min = Math.min(min,i - left + 1);
+            current -= nums[left];
+            left++;
+        }
+
+    }
+    
+    if(min == Infinity){
+        return 0;
+    }
+
+    return min;
+
+};
+
+# 16-08-2025
+
+1. 45. Jump Game II
+
+var jump = function(nums) {
+   
+  let farthest = 0;
+  let jumps = 0;
+  let currentEnd = 0;
+
+  for(let i = 0; i<nums.length - 1; i++){
+    farthest = Math.max(farthest, i + nums[i]);
+
+    if(i === currentEnd){
+        jumps++;
+        currentEnd = farthest;
+    }
+  }
+
+  return jumps;
+};
+
+
+# 22-08-2025
+
+18. 4Sum
+
+var fourSum = function(nums, target) {
+
+    let result = [];
+
+    nums.sort((a,b)=> a-b);
+
+    for(let i = 0; i<nums.length-3; i++){
+
+        if(i > 0 && nums[i] == nums[i-1]) continue;
+
+        for(let j = i + 1; j<nums.length - 2; j++){
+
+            if(j > i+1 && nums[j] == nums[j-1]) continue;
+            let left = j+1;
+             let right = nums.length - 1;
+
+             while(left < right){
+               let sum = nums[i] + nums[j] + nums[left] + nums[right];
+
+            if(sum == target){
+                result.push([nums[i],nums[j],nums[left],nums[right]]);
+                left++;
+                right--;
+
+                while(left < right && nums[left] == nums[left-1]) left++;
+                while(left < right && nums[right] == nums[right + 1]) right--; 
+            }else if(sum < target){
+                left++;
+            }else{
+                right --;
+            }
+        }
+    }
+    }
+
+    return result;   
+};
+
+
+# 04-09-2025
+
+1. var candy = function(ratings) {
+    let candies = new Array(ratings.length).fill(1);
+    let sum = 0;
+
+    for(let i = 1; i<ratings.length; i++){
+        if(ratings[i] > ratings[i-1]){
+            candies[i] = candies[i-1] +1;
+        }
+    }
+
+    for(let i = ratings.length-1;i>= 0; i--){
+        if(ratings[i] > ratings[i+1]){
+            candies[i] = Math.max(candies[i], candies[i+1] + 1);
+        }
+    }
+    
+    for(let i = 0; i<candies.length; i++){
+        sum += candies[i];
+    };
+
+    return sum;
+};
+
+
+
+
 
 
 

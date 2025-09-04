@@ -1,0 +1,1 @@
+# remember by creating a small project that deletes the ebs snapshots when they are not connected to any volume

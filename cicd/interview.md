@@ -2,7 +2,7 @@
 Q.1) What is Continuous Integration (CI)?
 ans : Continuous integration is a process in which whenever the version control detect any change in the respository then it should trigger the .yml files placed inside the workflows.
       It should help to run the build
-      It should helpt to run the tests
+      It should help to run the tests
       It should help to run the linting/formatting
       before deploying it to the server
       It helps to fix the noticed the issue if any
