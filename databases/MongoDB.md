@@ -764,3 +764,374 @@ db.collection.aggregate([
 * $redact : Allows you to conditionally include/exclude nested fields (like documents inside arrays or sub-docs) at any depth.
 
 
+
+
+# -----------------------------------------------------------------------
+
+
+Core Concepts
+
+What is MongoDB, and how does it differ from relational databases?
+
+What are documents and collections in MongoDB?
+
+Explain BSON vs JSON in MongoDB.
+
+How does MongoDB handle schema flexibility (schema-less design)?
+
+What are capped collections? When would you use them?
+
+Indexes & Performance
+
+What types of indexes does MongoDB support?
+
+How does a compound index work?
+
+What is an index cardinality, and why does it matter?
+
+Explain the difference between a sparse index and a partial index.
+
+What are text indexes, and how are they implemented?
+
+Replication & High Availability
+
+What is a replica set in MongoDB?
+
+How does MongoDB elect a primary in a replica set?
+
+Can you write to secondary nodes in a replica set?
+
+What are write concerns and read preferences?
+
+How do you handle replica set failover in production?
+
+Sharding & Scalability
+
+What is sharding, and why do we need it?
+
+How do you choose a shard key? What makes a good vs. bad shard key?
+
+What are mongos and config servers in sharding architecture?
+
+How does chunk migration work in sharding?
+
+What happens if your shard key causes data skew (hotspots)?
+
+Transactions & Consistency
+
+Does MongoDB support ACID transactions? From which version?
+
+How do multi-document transactions work in MongoDB?
+
+What’s the difference between read concern and write concern?
+
+Explain eventual consistency in MongoDB.
+
+How do you handle rollbacks in replication?
+
+Schema Design & Query Optimization
+
+How do you decide between embedding documents vs. referencing documents?
+
+What’s the impact of large documents (16MB BSON limit)?
+
+How do you analyze query performance in MongoDB? (hint: explain())
+
+What are common anti-patterns in MongoDB schema design?
+
+How do you handle one-to-many and many-to-many relationships efficiently?
+
+
+# --------------------------------------------------------------------------
+
+
+
+
+
+
+🔹 Aggregation & Grouping
+
+Q) Find the top 5 customers who spent the most in orders collection.
+ans : select customer_name, sum(amount) as total_sum from orders group by customer_name order by total_sum desc limit 5;
+
+- mongo solution
+
+db.orders.aggregate([
+      $group:{
+         "_id": "$customer_name",
+         "total_sum": {
+            "$sum": "$amount"
+         }   
+      },
+      $sort:{
+         "total_sum": -1   
+      },
+      $limit: 5,
+      $project:{
+          "customer_name": 1  
+      }
+])
+
+Q) Calculate average salary by department.
+ans :
+   db.employees.aggregate([
+      {
+      $group:{
+        "_id": "$department",
+        "average_salary": {
+        "$avg" : "$salary"
+        }
+      }
+      },
+      {
+      $project:{
+        "average_salary" : 1    
+      }     
+      }
+   ])
+
+Q) Find users who placed more than 3 orders in the last 30 days.
+  
+   db.orders.aggregate([
+      {
+       "$match":{
+          "creation_date": {
+          "$gte": new Date(Date.now() - 30*24*60*60*1000)
+          }
+       } 
+      },
+      {
+      "$group":{
+         "_id": "$user_name",
+         "count": {
+            "$sum": 1
+         } 
+      }
+      },
+      {
+       "$match":{
+         "count" : {
+            "$gte": 3
+         }   
+       }
+      },
+      {
+      "$project": {
+          "user": "$_id"  
+      }       
+      }
+   ])
+
+Q) Get monthly sales totals for the current year.
+ans:
+
+db.orders.aggregate([
+  {
+    $match: {
+      order_date: {
+        $gte: new Date(new Date().getFullYear(), 0, 1),   // Jan 1 of current year
+        $lte: new Date(new Date().getFullYear(), 11, 31)  // Dec 31 of current year
+      }
+    }
+  },
+  {
+    $group: {
+      _id: { month: { $month: "$order_date" } },
+      totalSales: { $sum: "$amount" }
+    }
+  },
+  {
+    $project: {
+      month: "$_id.month",
+      totalSales: 1,
+      _id: 0
+    }
+  },
+  { $sort: { month: 1 } }
+]);
+
+
+Q) Find the product category with the highest revenue.
+
+db.orders.aggregate([
+  {
+    $group: {
+      _id: "$product_category",
+      totalRevenue: { $sum: "$amount" }
+    }
+  },
+  { $sort: { totalRevenue: -1 } },  // highest revenue first
+  { $limit: 1 }                     // only top category
+]);
+
+
+Q) Calculate the percentage of completed vs. pending orders.   (complex aggregation)
+ans : 
+db.orders.aggregate([
+  {
+    $group: {
+      _id: "$status",               // group by order status
+      count: { $sum: 1 }
+    }
+  },
+  {
+    $group: {
+      _id: null,
+      total: { $sum: "$count" },
+      statuses: {
+        $push: { status: "$_id", count: "$count" }
+      }
+    }
+  },
+  { $unwind: "$statuses" },
+  {
+    $project: {
+      status: "$statuses.status",
+      count: "$statuses.count",
+      percentage: {
+        $multiply: [
+          { $divide: ["$statuses.count", "$total"] },
+          100
+        ]
+      }
+    }
+  }
+]);
+
+Q) Find the median salary of employees.
+
+db.employees.aggregate([
+  // 1. Sort by salary
+  { $sort: { salary: 1 } },
+
+  // 2. Collect all salaries into an array
+  {
+    $group: {
+      _id: null,
+      salaries: { $push: "$salary" },
+      count: { $sum: 1 }
+    }
+  },
+
+  // 3. Compute median using $arrayElemAt
+  {
+    $project: {
+      median: {
+        $cond: {
+          if: { $eq: [{ $mod: ["$count", 2] }, 0] }, // even count
+          then: {
+            $avg: [
+              { $arrayElemAt: ["$salaries", { $divide: ["$count", 2] }] },
+              { $arrayElemAt: ["$salaries", { $subtract: [{ $divide: ["$count", 2] }, 1] }] }
+            ]
+          },
+          else: {
+            $arrayElemAt: ["$salaries", { $floor: { $divide: ["$count", 2] } }]
+          }
+        }
+      }
+    }
+  }
+]);
+
+
+Q) List employees with salaries above their department average.
+ans :
+
+
+
+Q) Get the maximum, minimum, and average order value per customer.
+
+Q) Find the most frequently ordered product (mode).
+
+🔹 Array & Nested Documents
+
+Find users who purchased at least one product in both “Electronics” and “Clothing”.
+
+Find all orders where any item has quantity > 5.
+
+Unwind orders to get a flat list of all items sold.
+
+Find users where address.city = "New York".
+
+Update the price of a specific item inside the items array.
+
+Get the total quantity sold of each product across all orders.
+
+Find all orders containing more than 3 unique products.
+
+Filter array elements (only include items with quantity > 2 in projection).
+
+Check if all elements in an array meet a condition (e.g., all grades > 50).
+
+Find documents where an array field has duplicate values.
+
+🔹 Joins & Lookups
+
+Join orders with products and customers (multi-level lookup).
+
+Find customers who never placed an order (anti-join).
+
+Get all products that have never been sold.
+
+Join with a pipeline (lookup with conditions).
+
+Perform a left join to fetch customer details even if no orders exist.
+
+🔹 Text & Pattern Matching
+
+Find users where name contains “John” (case-insensitive).
+
+Search articles that contain either “AI” or “ML” but not both.
+
+Implement full-text search with relevance score.
+
+Find products where description has more than 3 words.
+
+Use regex to find emails that end with @gmail.com.
+
+🔹 Performance-Oriented / Tricky
+
+Find the top 3 most active users by number of logins.
+
+Get last N inserted documents (without sorting on a big collection).
+
+Paginate orders using _id instead of skip/limit.
+
+Sharded collection: Find orders by range of orderDate (efficient query).
+
+Count documents in a large collection without countDocuments() (use $group).
+
+Find gaps in a sequence of orderIds.
+
+Get all distinct values of a field across nested arrays.
+
+Find documents where nested object contains a specific key.
+
+Delete duplicate documents based on email (keep latest only).
+
+Project only selected fields and rename them (aggregation projection).
+
+🔹 Real-World Scenarios
+
+Find top 5 couriers delivering the most shipments.
+
+Calculate average delivery time per courier.
+
+Find customers whose total refund > total spent.
+
+Get the cart abandonment rate (users with carts but no orders).
+
+Detect fraudulent users (same contact used by multiple accounts).
+
+Find top 3 cities with the highest revenue.
+
+Identify peak login hours in a day.
+
+Find the retention rate (users active in multiple months).
+
+Find sellers whose average product rating < 3.
+
+Detect orders with inconsistent total (sum of items ≠ total field).
+
+

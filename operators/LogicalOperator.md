@@ -2,27 +2,27 @@
 js
 Copy
 Edit
-console.log(true && false || true);
+console.log(true && false || true); // false || true --> true
 2
 js
 Copy
 Edit
-console.log(false || (true && false));
+console.log(false || (true && false)); // false || false --> false
 3
 js
 Copy
 Edit
-console.log(!true || false && true);
+console.log(!true || false && true); // !true || false --> !true
 4
 js
 Copy
 Edit
-console.log(true && !false || false);
+console.log(true && !false || false); // true || false --> true
 5
 js
 Copy
 Edit
-console.log(false && !false || true && false);
+console.log(false && !false || true && false); // 
 6
 js
 Copy

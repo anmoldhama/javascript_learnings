@@ -1,4 +1,5 @@
 🛠️ 50 JavaScript Polyfill & Implementation Interview Questions
+
 🔁 Array Methods (Polyfills)
 Q.1) Write a polyfill for Array.prototype.map?
 ans : 

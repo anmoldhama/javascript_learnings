@@ -123,7 +123,7 @@ ans : React hooks are the hooks to manage the re-renders cycle inside the functi
            useState() : used to create and manage the state.
            ,useEffect(): used to manage the side effects inside the functional components
            ,useCallback(): used to prevent the re-rendering of a functions.
-           ,useRef(): used to prevent the re-rendering of a variable ,
+           ,useRef(): used to prevent the re-rendering of a variable.
             useMemo(): used to prvent the complex calculations by memoizing them only triggered on the dependency array.
             , useContext(): use to get the context of the global state.
             , useReducer() : use to create and manage the complex states.
@@ -132,7 +132,6 @@ Q.24) Explain the rules of hooks.
 ans : Only call Hooks at the top level
       Only call Hooks from React functions
       
-
 Q.25) What is the use of useContext() hook?
 ans : useContext hook is used to manage the state globally.
       use useContext() to create the state

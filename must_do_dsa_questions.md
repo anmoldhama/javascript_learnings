@@ -416,7 +416,7 @@ function reverse(arr){
      return arr;
 }
 
-20 - Custom Array.map() ⭐⭐
+20 - Custom Array.map() ⭐⭐ done
 
 21 - Find Pivot Index (Equal left/right sums) ⭐⭐
 
@@ -609,7 +609,7 @@ var longestConsecutive = function(nums) {
          let current = [nums[left]];
         if(left < nums.length){
       
-       current.push(nums[left]);
+          current.push(nums[left]);
         }
 
         if(current.length > result.length){
@@ -4547,6 +4547,41 @@ var fourSum = function(nums, target) {
 
     return sum;
 };
+
+
+
+# unflatten the object
+
+function unflatten(obj){
+   let result = {};
+   
+   for(let key in obj){
+     let current = result;
+     let parts = key.split(".");
+     
+     parts.forEach((k,index)=>{
+        if(index == parts.length - 1){
+          current[k] = obj[key];
+        }else{
+          if(!current[k]) current[k] = {};
+          current = current[k];
+        }
+     })
+   }
+   
+   return result;
+}
+
+const flattened = {
+  "a.b.c": 1,
+  "a.b.d": 2,
+  "a.e": 3,
+  "x.y.z": 4
+};
+
+
+
+console.log(unflatten(flattened)); // Output: 10
 
 
 
