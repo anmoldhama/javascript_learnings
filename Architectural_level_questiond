@@ -1,0 +1,227 @@
+🔴 Redis Answers (Questions 1–15)
+
+1- Problems Redis solves: In-memory caching, fast lookups, real-time analytics, leaderboards, rate limiting, queues.
+
+2- Redis vs Memcached: Redis supports persistence, complex data types, and atomic operations; Memcached is simpler and purely caching.
+
+3- Redis data structures:
+
+String → simple key-value
+
+List → queues, recent items
+
+Set → unique items, intersections
+
+Sorted Set → leaderboards, ranking
+
+Hash → objects / user profiles
+
+Stream → log/event processing
+
+4- Persistence:
+
+RDB: snapshot at intervals (fast, less durable)
+
+AOF: append-only log (slower, more durable)
+
+5- Replication: Master-slave replication; slaves can serve reads; automatic failover via Sentinel.
+
+6- High availability: Redis Sentinel + Redis Cluster; automatic failover.
+
+7- Eviction policies: LRU, LFU, TTL-based, allkeys or volatile; used when memory is limited.
+
+8- Rate limiter: Use INCR with TTL for counting requests per user/IP.
+
+9- Transactions/Lua: MULTI/EXEC blocks; Lua scripts allow atomic multi-step operations.
+
+10 - Consistency: Single-node Redis is strongly consistent; clusters may have eventual consistency across shards.
+
+11- Redis Cluster: Sharding data across nodes; hash slots determine which node stores a key.
+
+12- Pub/Sub vs Kafka: Pub/Sub is ephemeral, no persistence; Kafka persists messages, supports replay.
+
+13- Redis Streams: Durable, ordered log of messages; used for event processing.
+
+14- Cache stampede prevention: Use locks or randomized TTLs to prevent multiple cache misses.
+
+15- Performance bottlenecks: Network latency, large keys, blocking commands (like KEYS), insufficient memory.
+
+🟢 WebSockets Answers (Questions 16–25)
+
+16- WebSocket vs Polling/SSE: Full-duplex connection; low latency; reduces network overhead compared to polling; SSE is one-way only.
+
+17- Handshake: Client sends HTTP Upgrade request; server responds with 101 Switching Protocols.
+
+18- Scaling WebSockets: Use sticky sessions or external message broker (Redis Pub/Sub, Kafka) to sync messages across servers.
+
+19- Authentication: Token (JWT) sent in handshake headers; validate on connect.
+
+20- State management: In-memory maps, or external storage (Redis) for distributed state.
+
+21- Server crash: Clients must reconnect; implement reconnection logic.
+
+22- Chat/live updates: Each room can be a channel; server pushes updates to subscribed clients.
+
+23- WebSockets vs gRPC streaming: WebSockets general-purpose, works over browser; gRPC streaming better for structured service-to-service streaming.
+
+24- Backpressure: Buffer messages, drop or slow producers if clients are slow.
+
+25- Real-time notification design: Use WebSocket server + message broker for fan-out; clients subscribe to relevant channels.
+
+🟠 Kafka Answers (Questions 26–45)
+
+26- Kafka purpose: High-throughput distributed messaging, event streaming, log aggregation.
+
+27- Topics/Partitions/Offsets: Topic = message category; Partition = subset of topic; Offset = message position.
+
+28- Message ordering: Within a partition; partitions can be parallelized.
+
+29- Kafka vs traditional queues: Kafka persists messages, allows replay; traditional queues delete after consumption.
+
+30- Consumer group: Multiple consumers share partitions; each partition delivered to only one consumer in group.
+
+31- High throughput: Sequential disk writes, batching, compression.
+
+32- Broker down: ISR ensures replicated partitions; leader election happens automatically.
+
+33- Replication/ISR: Multiple brokers have copies; in-sync replicas ensure durability.
+
+34- Delivery semantics: At-least-once (default), exactly-once (with idempotent producer + transactional consumer).
+
+35- Scalable consumers: Use consumer groups; increase partitions to scale horizontally.
+
+36- Kafka vs RabbitMQ: Kafka better for event streaming, high-throughput logs; RabbitMQ better for complex routing and task queues.
+
+37- Backpressure: Consumers control fetch size; producers can slow down via retries.
+
+38- Retention policies: Time-based, size-based; messages may expire even if unconsumed.
+
+39- Durability: Messages written to disk and replicated across brokers.
+
+40- Idempotent producer: Ensures messages aren’t duplicated on retries.
+
+41- Real-time processing: Kafka → stream processors (Kafka Streams, Flink) → consumers.
+
+42- Reprocessing: Seek to offset; replay messages safely.
+
+43- Kafka vs Redis Streams: Kafka better for durability and replay; Redis Streams lightweight, in-memory.
+
+44- Schema Registry: Central schema store; validates producers/consumers for Avro/Protobuf messages.
+
+45- Common issues: Broker overload, unbalanced partitions, consumer lag, schema mismatch.
+
+🟣 RabbitMQ Answers (Questions 46–55)
+
+46- RabbitMQ purpose: Reliable message broker for asynchronous processing.
+
+47- Routing/exchanges: Direct (route to specific queue), Fanout (broadcast), Topic (pattern matching), Headers.
+
+48- RabbitMQ vs Kafka: RabbitMQ = task queue / routing; Kafka = durable log/event streaming.
+
+49- Acknowledgements: Confirm message delivery; unacked messages can be re-delivered.
+
+50- Durability: Persistent messages + durable queues survive broker restarts.
+
+51- Dead-letter exchange: Messages that fail delivery can be routed to DLX for inspection.
+
+52- Scaling: Horizontal clustering; federation or sharding for queues.
+
+53- Consumer crash: Unacknowledged messages re-queued.
+
+54- Message delivery: Publisher confirms, acknowledgements, durable queues.
+
+55- When bad choice: High-throughput log/event streaming, large-scale replay needed → use Kafka instead.
+
+56- MongoDB vs MySQL: MongoDB is schema-less, flexible, better for hierarchical/document data; MySQL is relational, ACID-compliant, better for structured, transactional data.
+
+57- Document model: Data stored as BSON documents; collections hold documents; supports nested objects and arrays.
+
+58- Indexes: Single-field, compound, text, geospatial, TTL; improves query performance.
+
+59- Transactions: Supported since v4.0; multi-document ACID transactions, usually slower.
+
+60- Replication/Replica Sets: Primary node handles writes; secondaries replicate; automatic failover via election.
+
+61- Sharding: Distributes data across shards; shard key determines placement; improves write/read scalability.
+
+Eventual consistency: Reads from secondaries can be slightly stale; used for availability/performance.
+
+Schema design: Embed for 1:N relationships if small, reference for large N:N; balance query patterns vs write performance.
+
+Aggregation pipeline: $match, $group, $project, $lookup; used for reporting, analytics, transformations.
+
+Handling large datasets: Use sharding, indexing, projection, and pagination; avoid large in-memory queries.
+
+Performance issues: Missing indexes, large documents, high cardinality queries, unbounded aggregations.
+
+Modeling relationships: Embedding vs referencing; depends on access patterns and document size.
+
+MongoDB vs PostgreSQL: MongoDB = flexible schema, fast writes; PostgreSQL = strong ACID, complex joins, transactional integrity.
+
+Migrations: Use scripts, version-controlled schema changes, or libraries like migrate-mongo.
+
+Prevent duplicates: Unique indexes, atomic upserts, application-level checks.
+
+🟡 MySQL & Relational DB Answers (Questions 71–80)
+
+MySQL vs MongoDB: MySQL = structured, relational, ACID; MongoDB = document, flexible schema, horizontal scaling.
+
+Normalization vs Denormalization: Normalization reduces redundancy; denormalization improves read performance.
+
+Indexes: B-Tree indexes speed up queries; covering/index-only queries; primary/unique indexes enforce constraints.
+
+ACID: Atomicity, Consistency, Isolation, Durability – ensures reliable transactions.
+
+Transactions: BEGIN → queries → COMMIT/ROLLBACK; ensures atomic operations.
+
+Isolation levels: READ UNCOMMITTED, READ COMMITTED, REPEATABLE READ (default), SERIALIZABLE; control visibility of uncommitted data.
+
+Locking: Row-level vs table-level; implicit locks during writes; deadlocks possible.
+
+Deadlock handling: Detect via DB, application retries.
+
+Scaling MySQL: Read replicas, sharding, caching layer (Redis), connection pooling.
+
+Read replicas vs sharding: Replicas = same data for scaling reads; sharding = partitioning data for horizontal write/read scaling.
+
+⚙️ System Design / HLD Answers (Questions 81–100)
+
+Notification system: Event-driven architecture → Kafka/RabbitMQ → notification service → push/email/WebSocket.
+
+Chat application: WebSocket servers, message broker, persistent store, message delivery guarantees, horizontal scaling.
+
+Idempotency: Ensure repeated API calls don’t create duplicates; use unique request IDs and check before processing.
+
+Booking system / overbooking: Optimistic concurrency, database transactions, distributed locks, real-time availability cache.
+
+Distributed locks: Use Redis SETNX or Zookeeper/etcd locks to coordinate access across servers.
+
+Eventual consistency: Acceptable for analytics, notifications; not for payments or reservations.
+
+Rate limiting: Token bucket, leaky bucket, or Redis INCR with TTL per user/IP.
+
+Audit logging: Immutable logs, append-only store, timestamped entries, potentially Kafka + S3.
+
+Sync vs async: Sync = immediate response, simpler; async = decoupled, scalable, eventual processing.
+
+Retries/failures: Exponential backoff, DLQ for failed messages, circuit breakers for system stability.
+
+Real-time analytics pipeline: Event producer → Kafka → stream processor (Spark/Flink) → DB/dashboard.
+
+Data consistency across services: Distributed transactions (2PC), eventual consistency, idempotent operations.
+
+High availability: Replication, multiple availability zones, failover mechanisms, load balancers.
+
+Schema evolution: Versioned schemas, backward-compatible changes, migration scripts.
+
+API design for scale: Pagination, caching, rate limiting, async processing, idempotency, versioning.
+
+Database choice: Depends on access patterns, consistency needs, write/read volume, transaction requirements.
+
+Peak traffic handling: Load balancers, horizontal scaling, caching, message queues, throttling.
+
+Fault tolerance: Redundant servers, retries, circuit breakers, failover strategies.
+
+Trade-offs: Latency vs consistency, cost vs performance, complexity vs maintainability, speed vs scalability.
+
+Speed vs scalability: Ship minimal MVP fast with simple design; refactor and optimize for scale as usage grows.
